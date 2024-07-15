@@ -4,7 +4,8 @@
   "description": "Online shop app - Vitus Balazs - .msg Career Start 2024",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:debug": "node index.js --inspect-brk"
   },
   "author": "Vitus Balazs",
   "license": "ISC"
