@@ -1,0 +1,11 @@
+{
+  "name": "online-shop",
+  "version": "1.0.0",
+  "description": "Online shop app - Vitus Balazs - .msg Career Start 2024",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Vitus Balazs",
+  "license": "ISC"
+}
