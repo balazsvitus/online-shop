@@ -1,12 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import Customer from '../../customers/domain/Customer';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export default class Location {
+export default class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ManyToOne(() => Customer, (customer) => customer.id)
+  customer: Customer;
+
   @Column({ nullable: false })
-  name: string;
+  createdAt: string;
 
   @Column({ nullable: false })
   country: string;
