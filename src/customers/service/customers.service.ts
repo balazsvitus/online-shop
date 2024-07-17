@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import CustomerRepository from '../repository/customer.repository';
+import CustomersRepository from '../repository/customers.repository';
 import Customer from '../domain/customer.domain';
 
 @Injectable()
 export class CustomersService {
-  constructor(private customerRepository: CustomerRepository) {}
+  constructor(private customersRepository: CustomersRepository) {}
 
-  async getCustomerById(id: string) {
-    return await this.customerRepository.findOne(id);
+  async getCustomerById(id: string): Promise<Customer | null> {
+    return await this.customersRepository.findOne(id);
   }
 
-  async createCustomer(customer: Customer) {
-    return await this.customerRepository.createCustomer(customer);
+  async createCustomer(customer: Customer): Promise<Customer> {
+    return await this.customersRepository.create(customer);
   }
 }

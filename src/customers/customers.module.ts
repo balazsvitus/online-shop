@@ -3,12 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CustomersController } from './controller/customers.controller';
 import { CustomersService } from './service/customers.service';
 import Customer from './domain/customer.domain';
-import CustomerRepository from './repository/customer.repository';
+import CustomersRepository from './repository/customers.repository';
 import CustomersMapper from './mapper/customers.mapper';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Customer])],
-  providers: [CustomerRepository, CustomersService, CustomersMapper],
+  providers: [CustomersRepository, CustomersService, CustomersMapper],
   controllers: [CustomersController],
+  exports: [CustomersService],
 })
 export class CustomersModule {}

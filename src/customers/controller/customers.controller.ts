@@ -7,7 +7,7 @@ import Customer from '../domain/customer.domain';
 @Controller('customers')
 export class CustomersController {
   constructor(
-    private customerMapper: CustomersMapper,
+    private customersMapper: CustomersMapper,
     private customerService: CustomersService,
   ) {}
 
@@ -21,7 +21,7 @@ export class CustomersController {
   @Post()
   async createCustomer(@Body() customerDTO: CustomerDTO): Promise<Customer> {
     return await this.customerService.createCustomer(
-      this.customerMapper.dtoToCustomer(customerDTO),
+      this.customersMapper.dtoToCustomer(customerDTO),
     );
   }
 }

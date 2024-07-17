@@ -4,25 +4,25 @@ import Customer from '../domain/customer.domain';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export default class CustomerRepository {
+export default class CustomersRepository {
   constructor(
     @InjectRepository(Customer)
-    private customerRepository: Repository<Customer>,
+    private customersRepository: Repository<Customer>,
   ) {}
 
   findAll(): Promise<Customer[]> {
-    return this.customerRepository.find();
+    return this.customersRepository.find();
   }
 
   findOne(id: string): Promise<Customer | null> {
-    return this.customerRepository.findOneBy({ id });
+    return this.customersRepository.findOneBy({ id });
   }
 
-  async createCustomer(customerDTO: Customer): Promise<Customer> {
-    return this.customerRepository.save(customerDTO);
+  async create(customer: Customer): Promise<Customer> {
+    return this.customersRepository.save(customer);
   }
 
   async remove(id: string): Promise<void> {
-    await this.customerRepository.delete(id);
+    await this.customersRepository.delete(id);
   }
 }

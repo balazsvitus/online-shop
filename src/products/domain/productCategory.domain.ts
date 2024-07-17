@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import Product from './Product';
+import Product from './product.domain';
 
 @Entity()
 export default class ProductCategory {
@@ -14,4 +14,10 @@ export default class ProductCategory {
 
   @OneToMany(() => Product, (product) => product.id)
   products: Product[];
+
+  constructor(name: string, description: string, products: Product[]) {
+    this.name = name;
+    this.description = description;
+    this.products = products;
+  }
 }

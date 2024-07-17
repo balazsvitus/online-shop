@@ -23,4 +23,20 @@ export default class Order {
 
   @Column({ nullable: false })
   streetAddress: string;
+
+  constructor(
+    customer: Customer,
+    createdAt: string,
+    country: string,
+    city: string,
+    county: string,
+    streetAddress: string,
+  ) {
+    this.customer = customer;
+    this.createdAt = createdAt;
+    this.country = country;
+    this.city = city;
+    this.county = county;
+    this.streetAddress = streetAddress;
+  }
 }

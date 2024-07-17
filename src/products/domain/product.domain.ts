@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import ProductCategory from './ProductCategory';
+import ProductCategory from './productCategory.domain';
 
 @Entity()
 export default class Product {
@@ -26,4 +26,22 @@ export default class Product {
 
   @Column({ nullable: false })
   imageUrl: string;
+
+  constructor(
+    name: string,
+    description: string,
+    price: number,
+    weight: number,
+    category: ProductCategory,
+    supplier: string,
+    imageUrl: string,
+  ) {
+    this.name = name;
+    this.description = description;
+    this.price = price;
+    this.weight = weight;
+    this.category = category;
+    this.supplier = supplier;
+    this.imageUrl = imageUrl;
+  }
 }

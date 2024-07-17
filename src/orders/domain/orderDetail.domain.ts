@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import Order from './Order';
-import Product from '../../products/domain/Product';
+import Order from './order.domain';
+import Product from '../../products/domain/product.domain';
 import Location from '../../shared/domain/Location';
 
 @Entity()
@@ -24,4 +24,16 @@ export default class OrderDetail {
 
   @Column()
   quantity: number;
+
+  constructor(
+    orderId: string,
+    productId: string,
+    shippedFrom: Location,
+    quantity: number,
+  ) {
+    this.orderId = orderId;
+    this.productId = productId;
+    this.shippedFrom = shippedFrom;
+    this.quantity = quantity;
+  }
 }

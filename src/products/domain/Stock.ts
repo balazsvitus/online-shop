@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import Product from './Product';
+import Product from './product.domain';
 import Location from '../../shared/domain/Location';
 
 @Entity()
