@@ -1,4 +1,4 @@
-import Customer from '../../customers/domain/Customer';
+import Customer from '../../customers/domain/customer.domain';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import Customer from '../domain/Customer';
+import Customer from '../domain/customer.domain';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -18,7 +18,7 @@ export default class CustomerRepository {
     return this.customerRepository.findOneBy({ id });
   }
 
-  async createCustomer(customerDTO: Customer) {
+  async createCustomer(customerDTO: Customer): Promise<Customer> {
     return this.customerRepository.save(customerDTO);
   }
 

@@ -1,26 +1,27 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import CustomerRepository from '../repository/CustomerRepository';
-import CustomerDTO from '../dto/CustomerDTO';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import CustomerDTO from '../dto/customer.dto';
 import CustomersMapper from '../mapper/customers.mapper';
+import { CustomersService } from '../service/customers.service';
+import Customer from '../domain/customer.domain';
 
 @Controller('customers')
 export class CustomersController {
   constructor(
-    private customerRepository: CustomerRepository,
     private customerMapper: CustomersMapper,
+    private customerService: CustomersService,
   ) {}
 
-  @Get()
-  async getAll() {
-    const customers = await this.customerRepository.findAll();
-    return customers;
+  @Get(':id')
+  async getCustomerById(
+    @Param() { id }: { id: string },
+  ): Promise<Customer | null> {
+    return await this.customerService.getCustomerById(id);
   }
 
   @Post()
-  async createCustomer(@Body() customerDTO: CustomerDTO) {
-    const newCustomer = await this.customerRepository.createCustomer(
+  async createCustomer(@Body() customerDTO: CustomerDTO): Promise<Customer> {
+    return await this.customerService.createCustomer(
       this.customerMapper.dtoToCustomer(customerDTO),
     );
-    return newCustomer;
   }
 }
