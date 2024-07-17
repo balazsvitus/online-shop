@@ -12,7 +12,7 @@ export default class OrderDetail {
   productId: string;
 
   @ManyToOne(() => Order, (order) => order.id)
-  @JoinColumn({ name: 'orderID' })
+  @JoinColumn({ name: 'orderId' })
   order: Order;
 
   @ManyToOne(() => Product, (product) => product.id)
