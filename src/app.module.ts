@@ -11,6 +11,7 @@ import Product from './products/domain/Product';
 import Customer from './customers/domain/Customer';
 import Order from './orders/domain/Order';
 import OrderDetail from './orders/domain/OrderDetail';
+import Stock from './products/domain/Stock';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import OrderDetail from './orders/domain/OrderDetail';
         Customer,
         Order,
         OrderDetail,
+        Stock,
       ],
     }),
   ],
