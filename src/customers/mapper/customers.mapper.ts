@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import CustomerDTO from '../dto/customer.dto';
+import CustomerInDTO from '../dto/customer.indto';
 import Customer from '../domain/customer.domain';
+import CustomerOutDTO from '../dto/customer.outdto';
 
 @Injectable()
 export default class CustomersMapper {
-  customerToDto(customer: Customer): CustomerDTO {
-    return new CustomerDTO(
+  customerToInDto(customer: Customer): CustomerInDTO {
+    return new CustomerInDTO(
       customer.firstName,
       customer.lastName,
       customer.username,
@@ -14,13 +15,23 @@ export default class CustomersMapper {
     );
   }
 
-  dtoToCustomer(customerDTO: CustomerDTO): Customer {
+  inDtoToCustomer(customerDTO: CustomerInDTO): Customer {
     return new Customer(
       customerDTO.firstName,
       customerDTO.lastName,
       customerDTO.username,
       customerDTO.password,
       customerDTO.emailAddress,
+    );
+  }
+
+  customerToOutDto(customer: Customer): CustomerOutDTO {
+    return new CustomerOutDTO(
+      customer.id,
+      customer.firstName,
+      customer.lastName,
+      customer.username,
+      customer.emailAddress,
     );
   }
 }

@@ -36,10 +36,14 @@ export class OrdersController {
     const customer = await this.customersService.getCustomerById(
       orderDTO.customer,
     );
-
-    return await this.ordersService.createOrder(
+    const order = await this.ordersService.createOrder(
       this.ordersMapper.dtoToOrder(orderDTO, customer),
     );
+    order.customer = await this.customersService.getCustomerById(
+      orderDTO.customer,
+    );
+
+    return order;
   }
 
   @Put(':id')
@@ -50,8 +54,11 @@ export class OrdersController {
     const customer = await this.customersService.getCustomerById(
       orderDTO.customer,
     );
-    const order = this.ordersMapper.dtoToOrder(orderDTO, customer);
+    const order = await this.ordersService.createOrder(
+      this.ordersMapper.dtoToOrder(orderDTO, customer),
+    );
     order.id = id;
+
     return await this.ordersService.updateOrder(order);
   }
 

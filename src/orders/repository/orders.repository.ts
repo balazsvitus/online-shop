@@ -11,7 +11,7 @@ export default class OrdersRepository {
   ) {}
 
   findAll(): Promise<Order[]> {
-    return this.ordersRepository.find();
+    return this.ordersRepository.find({ relations: ['customer'] });
   }
 
   findOne(id: string): Promise<Order | null> {

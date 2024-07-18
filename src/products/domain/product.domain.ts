@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import ProductCategory from './productCategory.domain';
 
 @Entity()
@@ -18,7 +24,8 @@ export default class Product {
   @Column({ nullable: false })
   weight: number;
 
-  @ManyToOne(() => ProductCategory, (productCategory) => productCategory.id)
+  @ManyToOne(() => ProductCategory)
+  @JoinColumn({ name: 'category_id' })
   category: ProductCategory;
 
   @Column({ nullable: false })
@@ -43,5 +50,9 @@ export default class Product {
     this.category = category;
     this.supplier = supplier;
     this.imageUrl = imageUrl;
+  }
+
+  getCategory() {
+    return this.category;
   }
 }

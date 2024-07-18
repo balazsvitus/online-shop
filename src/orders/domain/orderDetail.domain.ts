@@ -8,18 +8,22 @@ export default class OrderDetail {
   @PrimaryColumn()
   orderId: string;
 
-  @PrimaryColumn()
-  productId: string;
-
   @ManyToOne(() => Order, (order) => order.id)
   @JoinColumn({ name: 'orderId' })
   order: Order;
+
+  @PrimaryColumn()
+  productId: string;
 
   @ManyToOne(() => Product, (product) => product.id)
   @JoinColumn({ name: 'productId' })
   product: Product;
 
+  @Column()
+  shippedFromId: string;
+
   @ManyToOne(() => Location, (location) => location.id)
+  @JoinColumn({ name: 'shippedFromId' })
   shippedFrom: Location;
 
   @Column()
@@ -28,12 +32,12 @@ export default class OrderDetail {
   constructor(
     orderId: string,
     productId: string,
-    shippedFrom: Location,
+    shippedFromId: string,
     quantity: number,
   ) {
     this.orderId = orderId;
     this.productId = productId;
-    this.shippedFrom = shippedFrom;
+    this.shippedFromId = shippedFromId;
     this.quantity = quantity;
   }
 }

@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import CustomerDTO from '../dto/customer.dto';
+import CustomerInDTO from '../dto/customer.indto';
 import CustomersMapper from '../mapper/customers.mapper';
 import { CustomersService } from '../service/customers.service';
-import Customer from '../domain/customer.domain';
+import CustomerOutDTO from '../dto/customer.outdto';
 
 @Controller('customers')
 export class CustomersController {
@@ -14,14 +14,20 @@ export class CustomersController {
   @Get(':id')
   async getCustomerById(
     @Param() { id }: { id: string },
-  ): Promise<Customer | null> {
-    return await this.customerService.getCustomerById(id);
+  ): Promise<CustomerOutDTO | null> {
+    return this.customersMapper.customerToOutDto(
+      await this.customerService.getCustomerById(id),
+    );
   }
 
   @Post()
-  async createCustomer(@Body() customerDTO: CustomerDTO): Promise<Customer> {
-    return await this.customerService.createCustomer(
-      this.customersMapper.dtoToCustomer(customerDTO),
+  async createCustomer(
+    @Body() customerDTO: CustomerInDTO,
+  ): Promise<CustomerOutDTO> {
+    return this.customersMapper.customerToOutDto(
+      await this.customerService.createCustomer(
+        this.customersMapper.inDtoToCustomer(customerDTO),
+      ),
     );
   }
 }

@@ -11,7 +11,7 @@ export default class ProductsRepository {
   ) {}
 
   findAll(): Promise<Product[]> {
-    return this.productsRepository.find();
+    return this.productsRepository.find({ relations: ['category'] });
   }
 
   findOne(id: string): Promise<Product | null> {
