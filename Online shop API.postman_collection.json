@@ -1,0 +1,406 @@
+{
+	"info": {
+		"_postman_id": "b9ac2d33-53cf-413d-a466-d8a0ccd0c9df",
+		"name": "Online shop API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36990545"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "GET /health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/health",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "GET /customers/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/customers/261668e4-c260-49bb-bd74-bb35bb9ad1dd",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"customers",
+								"261668e4-c260-49bb-bd74-bb35bb9ad1dd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /customers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Java\",\r\n    \"lastName\": \"Spring\",\r\n    \"username\": \"JavaScript5\",\r\n    \"password\": \"youllneverguess2\",\r\n    \"emailAddress\": \"email@address.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/customers",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product categories",
+			"item": [
+				{
+					"name": "GET /productCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/productCategories",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /productCategories/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/productCategories/092b3f1a-4c19-4563-bde9-9a3301abd679",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productCategories",
+								"092b3f1a-4c19-4563-bde9-9a3301abd679"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /productCategories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Bread\",\r\n    \"description\": \"Breaddd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/productCategories",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Breaddddddddddddddddddssss\",\r\n    \"description\": \"Bread I guess\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/productCategories/d97def89-6251-49be-8b87-bb7530ad53f8",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productCategories",
+								"d97def89-6251-49be-8b87-bb7530ad53f8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /productCategories/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/productCategories/d97def89-6251-49be-8b87-bb7530ad53f8",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"productCategories",
+								"d97def89-6251-49be-8b87-bb7530ad53f8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "GET /products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/products",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /products/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/products/30fa99cb-34da-4ce0-8a43-23cad6af7c4e",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"30fa99cb-34da-4ce0-8a43-23cad6af7c4e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Schweppes Bitter Lemon\",\r\n    \"description\": \"I kinda hate this\",\r\n    \"price\": 5,\r\n    \"weight\": 10,\r\n    \"category\": \"092b3f1a-4c19-4563-bde9-9a3301abd679\",\r\n    \"supplier\": \"Some Schweppes Company I Guess\",\r\n    \"imageUrl\": \"https://auchan.vtexassets.com/arquivos/ids/209270/bautura-racoritoare-carbogazoasa-schweppes-bitter-lemon-033-l-doza-9432250318878.jpg?v=638011830928570000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/products",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT /products/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Schweppes Bitter Lemon\",\r\n    \"description\": \"I kinda hate this\",\r\n    \"price\": 5,\r\n    \"weight\": 10,\r\n    \"category\": \"092b3f1a-4c19-4563-bde9-9a3301abd679\",\r\n    \"supplier\": \"Some Schweppes Company I Guess\",\r\n    \"imageUrl\": \"https://auchan.vtexassets.com/arquivos/ids/209270/bautura-racoritoare-carbogazoasa-schweppes-bitter-lemon-033-l-doza-9432250318878.jpg?v=638011830928570000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/products/30fa99cb-34da-4ce0-8a43-23cad6af7c4e",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"30fa99cb-34da-4ce0-8a43-23cad6af7c4e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /products/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/products/a1a09c02-7f95-49fa-b162-4606bc584dda",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"a1a09c02-7f95-49fa-b162-4606bc584dda"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stocks",
+			"item": [
+				{
+					"name": "GET /stocks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/stocks",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH /stocks",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"5acbd545-0055-4997-a6e2-d4916b77ef48\",\r\n    \"locationId\": \"8f01bf88-02c8-4433-9321-d0804b001fcf\",\r\n    \"quantity\": 13\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/stocks",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stocks"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "GET /orders",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "POST /orders",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": \"\",\r\n    \"createdAt\": \"\",\r\n    \"country\": \"\",\r\n    \"city\": \"\",\r\n    \"county\": \"\",\r\n    \"streetAddress\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
