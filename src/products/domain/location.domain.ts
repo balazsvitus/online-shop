@@ -19,4 +19,18 @@ export default class Location {
 
   @Column({ nullable: false })
   streetAddress: string;
+
+  constructor(
+    name: string,
+    country: string,
+    city: string,
+    county: string,
+    streetAddress: string,
+  ) {
+    this.name = name;
+    this.country = country;
+    this.city = city;
+    this.county = county;
+    this.streetAddress = streetAddress;
+  }
 }
