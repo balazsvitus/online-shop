@@ -25,7 +25,6 @@ export class OrdersController {
   @Get()
   async getOrders(): Promise<OrderDTO[]> {
     const orders = await this.ordersService.getOrders();
-
     const ordersDTO: OrderDTO[] = [];
     orders.map((order) => {
       ordersDTO.push(this.ordersMapper.orderToDto(order));
@@ -36,9 +35,7 @@ export class OrdersController {
   @ApiResponse({ status: 200, description: 'Returns the order' })
   @ApiResponse({ status: 404, description: "The order can't be found" })
   @Get(':id')
-  async getOrderById(
-    @Param() { id }: { id: string },
-  ): Promise<OrderDTO | null> {
+  async getOrderById(@Param('id') id: string): Promise<OrderDTO | null> {
     const order = await this.ordersService.getOrderById(id);
     return this.ordersMapper.orderToDto(order);
   }
@@ -69,7 +66,7 @@ export class OrdersController {
   @ApiResponse({ status: 404, description: "The order can't be found" })
   @Put(':id')
   async updateOrder(
-    @Param() { id }: { id: string },
+    @Param('id') id: string,
     @Body() orderDTO: OrderDTO,
   ): Promise<OrderDTO> {
     const customer = await this.customersService.getCustomerById(
@@ -91,7 +88,7 @@ export class OrdersController {
   })
   @ApiResponse({ status: 404, description: "The order can't be found" })
   @Delete(':id')
-  async removeOrder(@Param() { id }: { id: string }) {
+  async removeOrder(@Param('id') id: string) {
     await this.ordersService.removeOrder(id);
   }
 }

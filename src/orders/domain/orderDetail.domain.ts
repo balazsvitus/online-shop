@@ -8,7 +8,7 @@ export default class OrderDetail {
   @PrimaryColumn()
   orderId: string;
 
-  @ManyToOne(() => Order, (order) => order.id)
+  @ManyToOne(() => Order, (order) => order.orderDetails)
   @JoinColumn({ name: 'orderId' })
   order: Order;
 
@@ -26,7 +26,7 @@ export default class OrderDetail {
   @JoinColumn({ name: 'shippedFromId' })
   shippedFrom: Location;
 
-  @Column()
+  @Column({ nullable: false })
   quantity: number;
 
   constructor(

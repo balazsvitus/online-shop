@@ -16,7 +16,7 @@ export class CustomersController {
   @ApiResponse({ status: 404, description: "The user can't be found" })
   @Get(':id')
   async getCustomerById(
-    @Param() { id }: { id: string },
+    @Param('id') id: string,
   ): Promise<CustomerOutDTO | null> {
     const user = await this.customerService.getCustomerById(id);
     return this.customersMapper.customerToOutDto(user);
