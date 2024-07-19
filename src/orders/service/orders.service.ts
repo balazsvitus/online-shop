@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import OrdersRepository from '../repository/orders.repository';
 import Order from '../domain/order.domain';
 
@@ -6,23 +6,29 @@ import Order from '../domain/order.domain';
 export class OrdersService {
   constructor(private ordersRepository: OrdersRepository) {}
 
-  async getOrders(): Promise<Order[]> {
+  getOrders(): Promise<Order[]> {
     return this.ordersRepository.findAll();
   }
 
   async getOrderById(id: string): Promise<Order | null> {
-    return this.ordersRepository.findOne(id);
+    const order = await this.ordersRepository.findOne(id);
+    if (!order) {
+      throw new NotFoundException("The order can't be found");
+    }
+    return order;
   }
 
-  async createOrder(order: Order): Promise<Order> {
-    return this.ordersRepository.create(order);
+  createOrder(order: Order): Promise<Order> {
+    return this.ordersRepository.save(order);
   }
 
   async updateOrder(order: Order): Promise<Order> {
-    return this.ordersRepository.update(order);
+    await this.getOrderById(order.id);
+    return this.ordersRepository.save(order);
   }
 
   async removeOrder(id: string): Promise<void> {
+    await this.getOrderById(id);
     this.ordersRepository.remove(id);
   }
 }

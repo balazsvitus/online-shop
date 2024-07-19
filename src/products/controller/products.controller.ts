@@ -3,14 +3,12 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Post,
   Put,
 } from '@nestjs/common';
 import ProductsMapper from '../mapper/product.mapper';
 import { ProductsService } from '../service/products.service';
-import Product from '../domain/product.domain';
 import ProductDTO from '../dto/product.dto';
 import ProductCategory from '../domain/productCategory.domain';
 import { ProductCategoriesService } from '../service/productCategories.service';
@@ -26,8 +24,14 @@ export class ProductsController {
 
   @ApiResponse({ status: 200, description: 'Returns the products' })
   @Get()
-  async getProducts(): Promise<Product[]> {
-    return await this.productsService.getProducts();
+  async getProducts(): Promise<ProductDTO[]> {
+    const products = await this.productsService.getProducts();
+
+    const productsDTO: ProductDTO[] = [];
+    products.map((product) => {
+      productsDTO.push(this.productsMapper.productToDto(product));
+    });
+    return productsDTO;
   }
 
   @ApiResponse({ status: 200, description: 'Returns the product' })
@@ -35,12 +39,9 @@ export class ProductsController {
   @Get(':id')
   async getProductById(
     @Param() { id }: { id: string },
-  ): Promise<Product | null> {
+  ): Promise<ProductDTO | null> {
     const product = await this.productsService.getProductById(id);
-    if (!product) {
-      throw new NotFoundException();
-    }
-    return product;
+    return this.productsMapper.productToDto(product);
   }
 
   @ApiResponse({
@@ -48,14 +49,16 @@ export class ProductsController {
     description: 'The product was created successfully',
   })
   @Post()
-  async createProduct(@Body() productDTO: ProductDTO): Promise<Product> {
+  async createProduct(@Body() productDTO: ProductDTO): Promise<ProductDTO> {
     const productCategory: ProductCategory =
       await this.productCategoriesService.getProductCategoryById(
         productDTO.category,
       );
 
-    return await this.productsService.createProduct(
-      this.productsMapper.dtoToProduct(productDTO, productCategory),
+    return this.productsMapper.productToDto(
+      await this.productsService.createProduct(
+        this.productsMapper.dtoToProduct(productDTO, productCategory),
+      ),
     );
   }
 
@@ -68,11 +71,7 @@ export class ProductsController {
   async updateProduct(
     @Param() { id }: { id: string },
     @Body() productDTO: ProductDTO,
-  ): Promise<Product> {
-    const checkProduct = this.productsService.getProductById(id);
-    if (!checkProduct) {
-      throw new NotFoundException();
-    }
+  ): Promise<ProductDTO> {
     const productCategory: ProductCategory =
       await this.productCategoriesService.getProductCategoryById(
         productDTO.category,
@@ -83,7 +82,11 @@ export class ProductsController {
     );
     product.id = id;
 
-    return await this.productsService.createProduct(product);
+    console.log('1', product);
+
+    return this.productsMapper.productToDto(
+      await this.productsService.updateProduct(product),
+    );
   }
 
   @ApiResponse({
@@ -93,10 +96,6 @@ export class ProductsController {
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Delete(':id')
   async removeProduct(@Param() { id }: { id: string }) {
-    const checkProduct = this.productsService.getProductById(id);
-    if (!checkProduct) {
-      throw new NotFoundException();
-    }
     await this.productsService.removeProduct(id);
   }
 }

@@ -8,31 +8,33 @@ export class ProductCategoriesService {
     private productCategoriesRepository: ProductCategoriesRepository,
   ) {}
 
-  async getProductCategories(): Promise<ProductCategory[]> {
+  getProductCategories(): Promise<ProductCategory[]> {
     return this.productCategoriesRepository.findAll();
   }
 
   async getProductCategoryById(id: string): Promise<ProductCategory | null> {
-    const product = await this.productCategoriesRepository.findOne(id);
-    if (product === null) {
-      throw new NotFoundException();
+    const productCategory = await this.productCategoriesRepository.findOne(id);
+    if (!productCategory) {
+      throw new NotFoundException("The product category can't be found");
     }
-    return product;
+    return productCategory;
   }
 
-  async createProductCategory(
+  createProductCategory(
     productCategory: ProductCategory,
   ): Promise<ProductCategory> {
-    return this.productCategoriesRepository.create(productCategory);
+    return this.productCategoriesRepository.save(productCategory);
   }
 
   async updateProductCategory(
     productCategory: ProductCategory,
   ): Promise<ProductCategory> {
-    return this.productCategoriesRepository.update(productCategory);
+    await this.getProductCategoryById(productCategory.id);
+    return this.productCategoriesRepository.save(productCategory);
   }
 
   async removeProductCategory(id: string): Promise<void> {
+    await this.getProductCategoryById(id);
     this.productCategoriesRepository.remove(id);
   }
 }

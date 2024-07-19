@@ -6,7 +6,7 @@ export default class OrderDetailDTO {
   @ApiProperty({ description: 'The ID of the product' })
   productId: string;
   @ApiProperty({ description: 'The location the order is shipped from' })
-  shippedFrom: Location;
+  shippedFrom: Location | string;
   @ApiProperty({ description: 'The quantity of the items shipped' })
   quantity: number;
 

@@ -3,14 +3,12 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Post,
   Put,
 } from '@nestjs/common';
 import OrdersMapper from '../mapper/orders.mapper';
 import { OrdersService } from '../service/orders.service';
-import Order from '../domain/order.domain';
 import { CustomersService } from 'src/customers/service/customers.service';
 import OrderDTO from '../dto/order.dto';
 import { ApiResponse } from '@nestjs/swagger';
@@ -25,19 +23,24 @@ export class OrdersController {
 
   @ApiResponse({ status: 200, description: 'Returns the orders' })
   @Get()
-  async getOrders(): Promise<Order[]> {
-    return await this.ordersService.getOrders();
+  async getOrders(): Promise<OrderDTO[]> {
+    const orders = await this.ordersService.getOrders();
+
+    const ordersDTO: OrderDTO[] = [];
+    orders.map((order) => {
+      ordersDTO.push(this.ordersMapper.orderToDto(order));
+    });
+    return ordersDTO;
   }
 
   @ApiResponse({ status: 200, description: 'Returns the order' })
   @ApiResponse({ status: 404, description: "The order can't be found" })
   @Get(':id')
-  async getOrderById(@Param() { id }: { id: string }): Promise<Order | null> {
+  async getOrderById(
+    @Param() { id }: { id: string },
+  ): Promise<OrderDTO | null> {
     const order = await this.ordersService.getOrderById(id);
-    if (!order) {
-      throw new NotFoundException();
-    }
-    return order;
+    return this.ordersMapper.orderToDto(order);
   }
 
   @ApiResponse({
@@ -45,7 +48,7 @@ export class OrdersController {
     description: 'The order was created successfully',
   })
   @Post()
-  async createOrder(@Body() orderDTO: OrderDTO): Promise<Order> {
+  async createOrder(@Body() orderDTO: OrderDTO): Promise<OrderDTO> {
     const customer = await this.customersService.getCustomerById(
       orderDTO.customer,
     );
@@ -56,7 +59,7 @@ export class OrdersController {
       orderDTO.customer,
     );
 
-    return order;
+    return this.ordersMapper.orderToDto(order);
   }
 
   @ApiResponse({
@@ -68,11 +71,7 @@ export class OrdersController {
   async updateOrder(
     @Param() { id }: { id: string },
     @Body() orderDTO: OrderDTO,
-  ): Promise<Order> {
-    const checkOrder = this.ordersService.getOrderById(id);
-    if (!checkOrder) {
-      throw new NotFoundException();
-    }
+  ): Promise<OrderDTO> {
     const customer = await this.customersService.getCustomerById(
       orderDTO.customer,
     );
@@ -81,7 +80,9 @@ export class OrdersController {
     );
     order.id = id;
 
-    return await this.ordersService.updateOrder(order);
+    return this.ordersMapper.orderToDto(
+      await this.ordersService.updateOrder(order),
+    );
   }
 
   @ApiResponse({
@@ -91,10 +92,6 @@ export class OrdersController {
   @ApiResponse({ status: 404, description: "The order can't be found" })
   @Delete(':id')
   async removeOrder(@Param() { id }: { id: string }) {
-    const checkOrder = this.ordersService.getOrderById(id);
-    if (!checkOrder) {
-      throw new NotFoundException();
-    }
     await this.ordersService.removeOrder(id);
   }
 }

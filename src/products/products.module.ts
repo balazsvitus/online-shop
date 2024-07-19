@@ -14,7 +14,7 @@ import ProductCategoriesMapper from './mapper/productCategory.mapper';
 import { StocksService } from './service/stocks.service';
 import StocksRepository from './repository/stock.repository';
 import StocksMapper from './mapper/stock.mapper';
-import { StockssController } from './controller/stocks.controller';
+import { StocksController } from './controller/stocks.controller';
 import LocationsRepository from './repository/location.repository';
 import { LocationsService } from './service/locations.service';
 import LocationsMapper from './mapper/location.mapper';
@@ -27,7 +27,7 @@ import Location from './domain/location.domain';
   controllers: [
     ProductsController,
     ProductCategoriesController,
-    StockssController,
+    StocksController,
   ],
   providers: [
     ProductsService,

@@ -18,11 +18,7 @@ export default class OrdersRepository {
     return this.ordersRepository.findOneBy({ id });
   }
 
-  create(order: Order): Promise<Order> {
-    return this.ordersRepository.save(order);
-  }
-
-  update(order: Order): Promise<Order> {
+  save(order: Order): Promise<Order> {
     return this.ordersRepository.save(order);
   }
 

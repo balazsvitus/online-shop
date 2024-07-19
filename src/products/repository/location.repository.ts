@@ -18,11 +18,7 @@ export default class LocationsRepository {
     return this.locationsRepository.findOneBy({ id });
   }
 
-  create(location: Location): Promise<Location> {
-    return this.locationsRepository.save(location);
-  }
-
-  update(location: Location): Promise<Location> {
+  save(location: Location): Promise<Location> {
     return this.locationsRepository.save(location);
   }
 

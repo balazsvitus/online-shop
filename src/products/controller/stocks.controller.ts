@@ -1,12 +1,11 @@
 import { Body, Controller, Get, Put } from '@nestjs/common';
 import StocksMapper from '../mapper/stock.mapper';
 import { StocksService } from '../service/stocks.service';
-import Stock from '../domain/stock.domain';
 import StockDTO from '../dto/stock.dto';
 import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('stocks')
-export class StockssController {
+export class StocksController {
   constructor(
     private stocksMapper: StocksMapper,
     private stocksService: StocksService,
@@ -17,8 +16,14 @@ export class StockssController {
     description: 'Returns the product stock at a given location',
   })
   @Get()
-  async getStocks(): Promise<Stock[]> {
-    return await this.stocksService.getStocks();
+  async getStocks(): Promise<StockDTO[]> {
+    const stocks = await this.stocksService.getStocks();
+
+    const stocksDto: StockDTO[] = [];
+    stocks.map((stock) => {
+      stocksDto.push(this.stocksMapper.stockToDto(stock));
+    });
+    return stocksDto;
   }
 
   @ApiResponse({
@@ -27,9 +32,11 @@ export class StockssController {
       'The product stock at the given location was updated successfully',
   })
   @Put()
-  async updateStock(@Body() stock: StockDTO): Promise<Stock> {
-    return await this.stocksService.updateProduct(
-      this.stocksMapper.dtoToStock(stock),
+  async updateStock(@Body() stock: StockDTO): Promise<StockDTO> {
+    return this.stocksMapper.stockToDto(
+      await this.stocksService.updateProduct(
+        this.stocksMapper.dtoToStock(stock),
+      ),
     );
   }
 }
