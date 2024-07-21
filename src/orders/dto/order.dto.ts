@@ -1,5 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, MinLength, MaxLength } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  MinLength,
+  MaxLength,
+  IsArray,
+  ArrayNotEmpty,
+  ValidateNested,
+} from 'class-validator';
+import OrderDetailInDTO from './orderDetail.indto';
+import { Type } from 'class-transformer';
 
 export default class OrderDTO {
   @ApiProperty({
@@ -50,6 +60,11 @@ export default class OrderDTO {
   @MinLength(3)
   @MaxLength(40)
   streetAddress: string;
+  @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => OrderDetailInDTO)
+  orderDetails: OrderDetailInDTO[];
 
   constructor(
     customer: string,
@@ -58,6 +73,7 @@ export default class OrderDTO {
     city: string,
     county: string,
     streetAddress: string,
+    orderDetails: OrderDetailInDTO[],
   ) {
     this.customer = customer;
     this.createdAt = createdAt;
@@ -65,5 +81,6 @@ export default class OrderDTO {
     this.city = city;
     this.county = county;
     this.streetAddress = streetAddress;
+    this.orderDetails = orderDetails;
   }
 }

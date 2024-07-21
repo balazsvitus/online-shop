@@ -43,6 +43,7 @@ export default class Order {
     city: string,
     county: string,
     streetAddress: string,
+    orderDetails: OrderDetail[],
   ) {
     this.customer = customer;
     this.createdAt = createdAt;
@@ -50,5 +51,6 @@ export default class Order {
     this.city = city;
     this.county = county;
     this.streetAddress = streetAddress;
+    this.orderDetails = orderDetails;
   }
 }

@@ -43,5 +43,6 @@ import Location from './domain/location.domain';
     LocationsRepository,
     LocationsMapper,
   ],
+  exports: [StocksService],
 })
 export class ProductsModule {}

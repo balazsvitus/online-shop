@@ -36,6 +36,7 @@ import Stock from './products/domain/stock.domain';
         OrderDetail,
         Stock,
       ],
+      logging: false,
     }),
   ],
   controllers: [HealthController],

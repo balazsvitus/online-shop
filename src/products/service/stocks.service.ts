@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import StocksRepository from '../repository/stock.repository';
 import Stock from '../domain/stock.domain';
 
@@ -23,5 +27,14 @@ export class StocksService {
   async updateProduct(stock: Stock): Promise<Stock> {
     await this.getStock(stock.productId, stock.locationId);
     return this.stocksRepository.update(stock);
+  }
+
+  async decreaseStock(productId: string, locationId: string, quantity: number) {
+    const stock = await this.stocksRepository.findOne(productId, locationId);
+    if (stock.quantity < quantity) {
+      throw new BadRequestException('There are not enough items in stock');
+    }
+    stock.quantity -= quantity;
+    await this.stocksRepository.update(stock);
   }
 }

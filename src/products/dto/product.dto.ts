@@ -47,7 +47,7 @@ export default class ProductDTO {
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
-  @MaxLength(100)
+  @MaxLength(300)
   imageUrl: string;
 
   constructor(
