@@ -10,6 +10,10 @@ export class CustomersService {
     return await this.customersRepository.findOne(id);
   }
 
+  async getCustomersByUsername(username: string) {
+    return await this.customersRepository.findOneByUsername(username);
+  }
+
   async createCustomer(customer: Customer): Promise<Customer> {
     return await this.customersRepository.create(customer);
   }

@@ -12,6 +12,7 @@ import Customer from './customers/domain/customer.domain';
 import Order from './orders/domain/order.domain';
 import OrderDetail from './orders/domain/orderDetail.domain';
 import Stock from './products/domain/stock.domain';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import Stock from './products/domain/stock.domain';
     ProductsModule,
     CustomersModule,
     SharedModule,
+    AuthModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',

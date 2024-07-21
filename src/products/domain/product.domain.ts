@@ -21,7 +21,7 @@ export default class Product {
   @Column({ nullable: false })
   price: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, type: 'decimal' })
   weight: number;
 
   @ManyToOne(() => ProductCategory)
