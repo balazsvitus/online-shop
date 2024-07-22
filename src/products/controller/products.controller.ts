@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -37,7 +38,9 @@ export class ProductsController {
   @ApiResponse({ status: 200, description: 'Returns the product' })
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Get(':id')
-  async getProductById(@Param('id') id: string): Promise<ProductDTO | null> {
+  async getProductById(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<ProductDTO | null> {
     const product = await this.productsService.getProductById(id);
     return this.productsMapper.productToDto(product);
   }
@@ -67,7 +70,7 @@ export class ProductsController {
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Put(':id')
   async updateProduct(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() productDTO: ProductDTO,
   ): Promise<ProductDTO> {
     const productCategory: ProductCategory =
@@ -93,7 +96,7 @@ export class ProductsController {
   })
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Delete(':id')
-  async removeProduct(@Param('id') id: string) {
+  async removeProduct(@Param('id', ParseUUIDPipe) id: string) {
     await this.productsService.removeProduct(id);
   }
 }

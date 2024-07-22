@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -43,7 +44,7 @@ export class ProductCategoriesController {
   })
   @Get(':id')
   async getProductById(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
   ): Promise<ProductCategoryDTO | null> {
     const productCategory =
       await this.productCategoriesService.getProductCategoryById(id);
@@ -75,7 +76,7 @@ export class ProductCategoriesController {
   })
   @Put(':id')
   async updateProduct(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() productCategoryDTO: ProductCategoryDTO,
   ): Promise<ProductCategoryDTO> {
     const productCategory =
@@ -98,7 +99,7 @@ export class ProductCategoriesController {
     description: "The product category can't be found",
   })
   @Delete(':id')
-  async removeProduct(@Param('id') id: string) {
+  async removeProduct(@Param('id', ParseUUIDPipe) id: string) {
     await this.productCategoriesService.removeProductCategory(id);
   }
 }
