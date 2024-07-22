@@ -7,14 +7,17 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import ProductCategoriesMapper from '../mapper/productCategory.mapper';
 import { ProductCategoriesService } from '../service/productCategories.service';
 import ProductCategoryDTO from '../dto/productCatergory.dto';
 import { ProductsService } from '../service/products.service';
 import { ApiResponse } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('product-categories')
+@UseGuards(JwtGuard)
 export class ProductCategoriesController {
   constructor(
     private productCategoriesMapper: ProductCategoriesMapper,

@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 import StocksMapper from '../mapper/stock.mapper';
 import { StocksService } from '../service/stocks.service';
 import StockDTO from '../dto/stock.dto';
 import { ApiResponse } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('stocks')
+@UseGuards(JwtGuard)
 export class StocksController {
   constructor(
     private stocksMapper: StocksMapper,

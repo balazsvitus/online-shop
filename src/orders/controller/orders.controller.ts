@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import OrdersMapper from '../mapper/orders.mapper';
 import { OrdersService } from '../service/orders.service';
@@ -16,8 +17,10 @@ import OrderDTO from '../dto/order.dto';
 import { ApiResponse } from '@nestjs/swagger';
 import { OrderDetailsService } from '../service/orderDetails.service';
 import OrderDetailsMapper from '../mapper/orderDetails.mapper';
+import { JwtGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('orders')
+@UseGuards(JwtGuard)
 export class OrdersController {
   constructor(
     private ordersMapper: OrdersMapper,

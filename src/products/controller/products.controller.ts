@@ -7,6 +7,7 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import ProductsMapper from '../mapper/product.mapper';
 import { ProductsService } from '../service/products.service';
@@ -14,8 +15,10 @@ import ProductDTO from '../dto/product.dto';
 import ProductCategory from '../domain/productCategory.domain';
 import { ProductCategoriesService } from '../service/productCategories.service';
 import { ApiResponse } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('products')
+@UseGuards(JwtGuard)
 export class ProductsController {
   constructor(
     private productsMapper: ProductsMapper,
