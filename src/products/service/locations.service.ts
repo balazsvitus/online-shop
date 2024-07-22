@@ -29,6 +29,6 @@ export class LocationsService {
 
   async removeLocation(id: string): Promise<void> {
     await this.getLocationById(id);
-    this.locationsRepository.remove(id);
+    await this.locationsRepository.remove(id);
   }
 }

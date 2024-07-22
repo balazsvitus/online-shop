@@ -14,7 +14,6 @@ import { OrdersService } from '../service/orders.service';
 import { CustomersService } from 'src/customers/service/customers.service';
 import OrderDTO from '../dto/order.dto';
 import { ApiResponse } from '@nestjs/swagger';
-import { OrderDetailsService } from '../service/orderDetails.service';
 import OrderDetailsMapper from '../mapper/orderDetails.mapper';
 import { JwtGuard } from 'src/auth/guard/jwt-auth.guard';
 
@@ -25,7 +24,6 @@ export class OrdersController {
     private ordersMapper: OrdersMapper,
     private ordersService: OrdersService,
     private customersService: CustomersService,
-    private orderDetailsService: OrderDetailsService,
     private orderDetailsMapper: OrderDetailsMapper,
   ) {}
 
@@ -59,8 +57,6 @@ export class OrdersController {
   })
   @Post()
   async createOrder(@Body() orderDTO: OrderDTO): Promise<OrderDTO> {
-    // await this.ordersService.validateOrder(orderDTO.orderDetails);
-
     const orderDetails = this.orderDetailsMapper.inDtosToOrderDetails(
       '',
       orderDTO.orderDetails,
@@ -68,8 +64,7 @@ export class OrdersController {
     const customer = await this.customersService.getCustomerById(
       orderDTO.customer,
     );
-    let order = this.ordersMapper.dtoToOrder(orderDTO, customer);
-    order = await this.ordersService.createOrder(
+    const order = await this.ordersService.createOrder(
       this.ordersMapper.dtoToOrder(orderDTO, customer),
       orderDetails,
     );
