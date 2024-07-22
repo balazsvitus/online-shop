@@ -1,6 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import CustomersRepository from '../repository/customers.repository';
 import Customer from '../domain/customer.domain';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class CustomersService {
@@ -22,7 +27,13 @@ export class CustomersService {
   //   return await this.customersRepository.create(customer);
   // }
 
-  createCustomer(customer: Customer): Promise<Customer> {
-    return this.customersRepository.create(customer);
+  async createCustomer(customer: Customer): Promise<Customer> {
+    try {
+      const hashedPassword = await hash(customer.password, 10);
+      customer.password = hashedPassword;
+      return await this.customersRepository.create(customer);
+    } catch (error) {
+      throw new BadRequestException('User with this username already exists');
+    }
   }
 }

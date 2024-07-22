@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import OrdersMapper from '../mapper/orders.mapper';
 import { OrdersService } from '../service/orders.service';
-import { CustomersService } from 'src/customers/service/customers.service';
+import { CustomersService } from '../../customers/service/customers.service';
 import OrderDTO from '../dto/order.dto';
 import { ApiResponse } from '@nestjs/swagger';
 import OrderDetailsMapper from '../mapper/orderDetails.mapper';
-import { JwtGuard } from 'src/auth/guard/jwt-auth.guard';
+import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 
 @Controller('orders')
 @UseGuards(JwtGuard)

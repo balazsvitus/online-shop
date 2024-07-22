@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Roles } from '../decorator/roles.decorator';
-import { CustomersService } from 'src/customers/service/customers.service';
+import { CustomersService } from '../../customers/service/customers.service';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -34,7 +34,9 @@ export class RolesGuard implements CanActivate {
       return false;
     }
 
-    // return roles.includes(user.role);
-    return roles.includes('admin');
+    console.log(roles);
+    console.log(user.role);
+
+    return roles.includes(user.role);
   }
 }

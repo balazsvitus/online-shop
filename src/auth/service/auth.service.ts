@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
-import Customer from 'src/customers/domain/customer.domain';
-import { CustomersService } from 'src/customers/service/customers.service';
+import Customer from '../../customers/domain/customer.domain';
+import { CustomersService } from '../../customers/service/customers.service';
 
 @Injectable()
 export class AuthService {
@@ -44,6 +44,9 @@ export class AuthService {
   async refresh({ refresh }: { refresh: string }) {
     const id = this.jwtService.decode(refresh).sub;
     const customer = await this.customersService.getCustomerById(id);
+    if (!customer) {
+      throw new UnauthorizedException('The user cannot be found');
+    }
     const payload = {
       username: customer.username,
       sub: customer.id,

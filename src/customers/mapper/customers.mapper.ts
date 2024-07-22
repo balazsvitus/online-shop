@@ -12,6 +12,7 @@ export default class CustomersMapper {
       customer.username,
       customer.password,
       customer.emailAddress,
+      customer.role,
     );
   }
 
@@ -22,6 +23,7 @@ export default class CustomersMapper {
       customerDTO.username,
       customerDTO.password,
       customerDTO.emailAddress,
+      customerDTO.role,
     );
   }
 
@@ -32,6 +34,7 @@ export default class CustomersMapper {
       customer.lastName,
       customer.username,
       customer.emailAddress,
+      customer.role,
     );
   }
 }

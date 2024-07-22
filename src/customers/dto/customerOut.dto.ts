@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CustomerRole } from '../domain/customer.domain';
 
 export default class CustomerOutDTO {
   @ApiProperty({ description: 'The ID of the customer' })
@@ -11,6 +12,8 @@ export default class CustomerOutDTO {
   username: string;
   @ApiProperty({ description: 'The email address of the user' })
   emailAddress: string;
+  @ApiProperty({ description: 'The role of the customer' })
+  role: CustomerRole;
 
   constructor(
     id: string,
@@ -18,11 +21,13 @@ export default class CustomerOutDTO {
     lastName: string,
     username: string,
     emailAddress: string,
+    role: CustomerRole,
   ) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.username = username;
     this.emailAddress = emailAddress;
+    this.role = role;
   }
 }

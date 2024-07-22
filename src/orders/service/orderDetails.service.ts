@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { StocksService } from 'src/products/service/stocks.service';
+import { StocksService } from '../../products/service/stocks.service';
 import OrderDetailsRepository from '../repository/orderDetails.repository';
 import OrderDetail from '../domain/orderDetail.domain';
 

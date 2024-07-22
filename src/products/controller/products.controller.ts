@@ -15,7 +15,9 @@ import ProductDTO from '../dto/product.dto';
 import ProductCategory from '../domain/productCategory.domain';
 import { ProductCategoriesService } from '../service/productCategories.service';
 import { ApiResponse } from '@nestjs/swagger';
-import { JwtGuard } from 'src/auth/guard/jwt-auth.guard';
+import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
+import { Roles } from 'src/auth/decorator/roles.decorator';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
 
 @Controller('products')
 @UseGuards(JwtGuard)
@@ -53,6 +55,8 @@ export class ProductsController {
     description: 'The product was created successfully',
   })
   @Post()
+  @UseGuards(RolesGuard)
+  @Roles(['admin'])
   async createProduct(@Body() productDTO: ProductDTO): Promise<ProductDTO> {
     const productCategory: ProductCategory =
       await this.productCategoriesService.getProductCategoryById(
@@ -72,6 +76,8 @@ export class ProductsController {
   })
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Put(':id')
+  @UseGuards(RolesGuard)
+  @Roles(['admin'])
   async updateProduct(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() productDTO: ProductDTO,
@@ -99,6 +105,8 @@ export class ProductsController {
   })
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Delete(':id')
+  @UseGuards(RolesGuard)
+  @Roles(['admin'])
   async removeProduct(@Param('id', ParseUUIDPipe) id: string) {
     await this.productsService.removeProduct(id);
   }
