@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import OrderDTO from '../dto/order.dto';
 import Order from '../domain/order.domain';
 import Customer from '../../customers/domain/customer.domain';
-import OrderDetailInDTO from '../dto/orderDetail.indto';
+import OrderDetailInDTO from '../dto/orderDetailIn.dto';
 
 @Injectable()
 export default class OrdersMapper {

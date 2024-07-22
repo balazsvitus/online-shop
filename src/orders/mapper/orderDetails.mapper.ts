@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import OrderDetailInDTO from '../dto/orderDetail.indto';
+import OrderDetailInDTO from '../dto/orderDetailIn.dto';
 import OrderDetail from '../domain/orderDetail.domain';
 
 @Injectable()

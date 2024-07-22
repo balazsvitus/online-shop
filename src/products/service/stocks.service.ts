@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import StocksRepository from '../repository/stock.repository';
 import Stock from '../domain/stock.domain';
+import OrderDetail from '../../orders/domain/orderDetail.domain';
 
 @Injectable()
 export class StocksService {
@@ -29,12 +30,19 @@ export class StocksService {
     return this.stocksRepository.update(stock);
   }
 
-  async decreaseStock(productId: string, locationId: string, quantity: number) {
-    const stock = await this.stocksRepository.findOne(productId, locationId);
-    if (stock.quantity < quantity) {
-      throw new BadRequestException('There are not enough items in stock');
-    }
-    stock.quantity -= quantity;
-    await this.stocksRepository.update(stock);
+  async decreaseStock(orderDetails: OrderDetail[]): Promise<void> {
+    await Promise.all(
+      orderDetails.map(async (orderDetail) => {
+        const stock = await this.stocksRepository.findOne(
+          orderDetail.productId,
+          orderDetail.shippedFromId,
+        );
+        if (stock.quantity < orderDetail.quantity) {
+          throw new BadRequestException('There are not enough items in stock');
+        }
+        stock.quantity -= orderDetail.quantity;
+        await this.stocksRepository.update(stock);
+      }),
+    );
   }
 }
