@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
-import Customer from '../../customers/domain/customer.domain';
 import { CustomersService } from '../../customers/service/customers.service';
+import { User } from '../domain/user.domain';
 
 @Injectable()
 export class AuthService {
@@ -13,15 +13,16 @@ export class AuthService {
 
   async validateUser(username: string, password: string) {
     const user = await this.customersService.getCustomersByUsername(username);
+    if (!user) {
+      throw new UnauthorizedException('The username is incorrect');
+    }
     if (user && (await compare(password, user.password))) {
-      const result = { ...user };
-      delete result.password;
-      return result;
+      return { username: user.username, id: user.id };
     }
     return null;
   }
 
-  async login(customer: Customer) {
+  async login(customer: User) {
     const valid = await this.validateUser(customer.username, customer.password);
     if (!valid) {
       throw new UnauthorizedException('The password is incorrect');

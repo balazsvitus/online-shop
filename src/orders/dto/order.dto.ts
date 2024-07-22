@@ -60,6 +60,10 @@ export default class OrderDTO {
   @MinLength(3)
   @MaxLength(40)
   streetAddress: string;
+  @ApiProperty({
+    description: 'The list of order details',
+    type: [OrderDetailInDTO],
+  })
   @IsArray()
   @ArrayNotEmpty()
   @ValidateNested({ each: true })

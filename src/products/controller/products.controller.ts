@@ -14,13 +14,14 @@ import { ProductsService } from '../service/products.service';
 import ProductDTO from '../dto/product.dto';
 import ProductCategory from '../domain/productCategory.domain';
 import { ProductCategoriesService } from '../service/productCategories.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 import { Roles } from 'src/auth/decorator/roles.decorator';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 
 @Controller('products')
 @UseGuards(JwtGuard)
+@ApiBearerAuth()
 export class ProductsController {
   constructor(
     private productsMapper: ProductsMapper,

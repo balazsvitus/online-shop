@@ -13,11 +13,12 @@ import ProductCategoriesMapper from '../mapper/productCategory.mapper';
 import { ProductCategoriesService } from '../service/productCategories.service';
 import ProductCategoryDTO from '../dto/productCatergory.dto';
 import { ProductsService } from '../service/products.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 
 @Controller('product-categories')
 @UseGuards(JwtGuard)
+@ApiBearerAuth()
 export class ProductCategoriesController {
   constructor(
     private productCategoriesMapper: ProductCategoriesMapper,

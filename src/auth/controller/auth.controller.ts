@@ -1,20 +1,35 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Request,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from '../service/auth.service';
-import Customer from '../../customers/domain/customer.domain';
 import { RefreshJwtGuard } from '../guard/refresh-jwt-auth.guard';
+import { ApiBody } from '@nestjs/swagger';
+import { User } from '../domain/user.domain';
+import { RefreshToken } from '../domain/refresh-token.domain';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('login')
-  async login(@Request() req: { body: Customer }) {
+  @ApiBody({ type: User })
+  async login(@Request() req: { body: User }) {
+    if (!req.body.username || !req.body.password) {
+      throw new UnauthorizedException(
+        'You must provide a username and a password!',
+      );
+    }
     return await this.authService.login(req.body);
   }
 
   @UseGuards(RefreshJwtGuard)
   @Post('refresh')
-  async refresh(@Request() req) {
+  @ApiBody({ type: RefreshToken })
+  async refresh(@Request() req: { body: RefreshToken }) {
     return this.authService.refresh(req.body);
   }
 }

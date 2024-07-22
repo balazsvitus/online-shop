@@ -11,13 +11,14 @@ import CustomerInDTO from '../dto/customerIn.dto';
 import CustomersMapper from '../mapper/customers.mapper';
 import { CustomersService } from '../service/customers.service';
 import CustomerOutDTO from '../dto/customerOut.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 import { Roles } from 'src/auth/decorator/roles.decorator';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 
 @Controller('customers')
 @UseGuards(JwtGuard)
+@ApiBearerAuth()
 export class CustomersController {
   constructor(
     private customersMapper: CustomersMapper,
