@@ -10,10 +10,6 @@ export default class CustomersRepository {
     private customersRepository: Repository<Customer>,
   ) {}
 
-  findAll(): Promise<Customer[]> {
-    return this.customersRepository.find();
-  }
-
   findOne(id: string): Promise<Customer | null> {
     return this.customersRepository.findOneBy({ id });
   }
@@ -24,9 +20,5 @@ export default class CustomersRepository {
 
   async create(customer: Customer): Promise<Customer> {
     return this.customersRepository.save(customer);
-  }
-
-  async remove(id: string): Promise<void> {
-    await this.customersRepository.delete(id);
   }
 }

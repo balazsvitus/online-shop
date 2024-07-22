@@ -3,19 +3,17 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Post,
   Put,
 } from '@nestjs/common';
 import ProductCategoriesMapper from '../mapper/productCategory.mapper';
 import { ProductCategoriesService } from '../service/productCategories.service';
-import ProductCategory from '../domain/productCategory.domain';
 import ProductCategoryDTO from '../dto/productCatergory.dto';
 import { ProductsService } from '../service/products.service';
 import { ApiResponse } from '@nestjs/swagger';
 
-@Controller('productCategories')
+@Controller('product-categories')
 export class ProductCategoriesController {
   constructor(
     private productCategoriesMapper: ProductCategoriesMapper,
@@ -25,8 +23,17 @@ export class ProductCategoriesController {
 
   @ApiResponse({ status: 200, description: 'Returns the product categories' })
   @Get()
-  async getProducts(): Promise<ProductCategory[]> {
-    return await this.productCategoriesService.getProductCategories();
+  async getProducts(): Promise<ProductCategoryDTO[]> {
+    const productCategories =
+      await this.productCategoriesService.getProductCategories();
+
+    const productCategoriesDto: ProductCategoryDTO[] = [];
+    productCategories.map((productCategory) => {
+      productCategoriesDto.push(
+        this.productCategoriesMapper.productCategoryToDto(productCategory),
+      );
+    });
+    return productCategoriesDto;
   }
 
   @ApiResponse({ status: 200, description: 'Returns the product category' })
@@ -36,14 +43,11 @@ export class ProductCategoriesController {
   })
   @Get(':id')
   async getProductById(
-    @Param() { id }: { id: string },
-  ): Promise<ProductCategory | null> {
+    @Param('id') id: string,
+  ): Promise<ProductCategoryDTO | null> {
     const productCategory =
       await this.productCategoriesService.getProductCategoryById(id);
-    if (!productCategory) {
-      throw new NotFoundException();
-    }
-    return productCategory;
+    return this.productCategoriesMapper.productCategoryToDto(productCategory);
   }
 
   @ApiResponse({
@@ -53,9 +57,11 @@ export class ProductCategoriesController {
   @Post()
   async createProduct(
     @Body() productCategoryDTO: ProductCategoryDTO,
-  ): Promise<ProductCategory> {
-    return await this.productCategoriesService.createProductCategory(
-      this.productCategoriesMapper.dtoToProductCategory(productCategoryDTO),
+  ): Promise<ProductCategoryDTO> {
+    return this.productCategoriesMapper.productCategoryToDto(
+      await this.productCategoriesService.createProductCategory(
+        this.productCategoriesMapper.dtoToProductCategory(productCategoryDTO),
+      ),
     );
   }
 
@@ -69,19 +75,17 @@ export class ProductCategoriesController {
   })
   @Put(':id')
   async updateProduct(
-    @Param() { id }: { id: string },
+    @Param('id') id: string,
     @Body() productCategoryDTO: ProductCategoryDTO,
-  ): Promise<ProductCategory> {
-    const checkProductCategory =
-      this.productCategoriesService.getProductCategoryById(id);
-    if (!checkProductCategory) {
-      throw new NotFoundException();
-    }
+  ): Promise<ProductCategoryDTO> {
     const productCategory =
       this.productCategoriesMapper.dtoToProductCategory(productCategoryDTO);
     productCategory.id = id;
-    return await this.productCategoriesService.updateProductCategory(
-      productCategory,
+
+    return this.productCategoriesMapper.productCategoryToDto(
+      await this.productCategoriesService.updateProductCategory(
+        productCategory,
+      ),
     );
   }
 
@@ -94,12 +98,7 @@ export class ProductCategoriesController {
     description: "The product category can't be found",
   })
   @Delete(':id')
-  async removeProduct(@Param() { id }: { id: string }) {
-    const checkProductCategory =
-      this.productCategoriesService.getProductCategoryById(id);
-    if (!checkProductCategory) {
-      throw new NotFoundException();
-    }
+  async removeProduct(@Param('id') id: string) {
     await this.productCategoriesService.removeProductCategory(id);
   }
 }

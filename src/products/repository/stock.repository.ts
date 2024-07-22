@@ -14,6 +14,15 @@ export default class StocksRepository {
     return this.stocksRepository.find();
   }
 
+  findOne(productId: string, locationId: string): Promise<Stock> {
+    return this.stocksRepository.findOne({
+      where: {
+        productId,
+        locationId,
+      },
+    });
+  }
+
   update(stock: Stock): Promise<Stock> {
     return this.stocksRepository.save(stock);
   }

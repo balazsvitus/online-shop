@@ -1,37 +1,35 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsNotEmpty,
-  IsNumber,
   IsString,
-  MaxLength,
-  Min,
+  IsNotEmpty,
   MinLength,
+  MaxLength,
+  IsNumber,
+  Min,
 } from 'class-validator';
 
-export default class StockDTO {
+export default class OrderDetailInDTO {
   @ApiProperty({ description: 'The ID of the product' })
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(100)
   productId: string;
-  @ApiProperty({ description: 'The ID of the location' })
+  @ApiProperty({ description: 'The location the order is shipped from' })
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(100)
-  locationId: string;
-  @ApiProperty({
-    description: 'The quantity of the products in the specific location',
-  })
+  shippedFrom: string;
+  @ApiProperty({ description: 'The quantity of the items shipped' })
   @IsNumber()
   @IsNotEmpty()
   @Min(1)
   quantity: number;
 
-  constructor(productId: string, locationId: string, quantity: number) {
+  constructor(productId: string, shippedFrom: string, quantity: number) {
     this.productId = productId;
-    this.locationId = locationId;
+    this.shippedFrom = shippedFrom;
     this.quantity = quantity;
   }
 }

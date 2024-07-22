@@ -14,11 +14,7 @@ export default class OrderDetailsRepository {
     return this.orderDetailsRepository.find();
   }
 
-  create(order: OrderDetail): Promise<OrderDetail> {
-    return this.orderDetailsRepository.save(order);
-  }
-
-  update(order: OrderDetail): Promise<OrderDetail> {
+  save(order: OrderDetail): Promise<OrderDetail> {
     return this.orderDetailsRepository.save(order);
   }
 

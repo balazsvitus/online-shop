@@ -4,8 +4,10 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import OrderDetail from './orderDetail.domain';
 
 @Entity()
 export default class Order {
@@ -31,6 +33,9 @@ export default class Order {
   @Column({ nullable: false })
   streetAddress: string;
 
+  @OneToMany(() => OrderDetail, (orderDetail) => orderDetail.order)
+  orderDetails: OrderDetail[];
+
   constructor(
     customer: Customer,
     createdAt: string,
@@ -38,6 +43,7 @@ export default class Order {
     city: string,
     county: string,
     streetAddress: string,
+    orderDetails: OrderDetail[],
   ) {
     this.customer = customer;
     this.createdAt = createdAt;
@@ -45,5 +51,6 @@ export default class Order {
     this.city = city;
     this.county = county;
     this.streetAddress = streetAddress;
+    this.orderDetails = orderDetails;
   }
 }

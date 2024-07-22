@@ -18,11 +18,7 @@ export default class ProductCategoriesRepository {
     return this.productCategoriesRepository.findOneBy({ id });
   }
 
-  create(order: ProductCategory): Promise<ProductCategory> {
-    return this.productCategoriesRepository.save(order);
-  }
-
-  update(order: ProductCategory): Promise<ProductCategory> {
+  save(order: ProductCategory): Promise<ProductCategory> {
     return this.productCategoriesRepository.save(order);
   }
 

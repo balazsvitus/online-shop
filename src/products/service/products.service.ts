@@ -6,27 +6,29 @@ import Product from '../domain/product.domain';
 export class ProductsService {
   constructor(private productsRepository: ProductsRepository) {}
 
-  async getProducts(): Promise<Product[]> {
+  getProducts(): Promise<Product[]> {
     return this.productsRepository.findAll();
   }
 
   async getProductById(id: string): Promise<Product | null> {
     const product = await this.productsRepository.findOne(id);
-    if (product === null) {
-      throw new NotFoundException();
+    if (!product) {
+      throw new NotFoundException("The product can't be found");
     }
     return product;
   }
 
-  async createProduct(product: Product): Promise<Product> {
-    return this.productsRepository.create(product);
+  createProduct(product: Product): Promise<Product> {
+    return this.productsRepository.save(product);
   }
 
   async updateProduct(product: Product): Promise<Product> {
-    return this.productsRepository.update(product);
+    await this.getProductById(product.id);
+    return this.productsRepository.save(product);
   }
 
   async removeProduct(id: string): Promise<void> {
+    await this.getProductById(id);
     this.productsRepository.remove(id);
   }
 }

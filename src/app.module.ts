@@ -38,6 +38,7 @@ import { AuthModule } from './auth/auth.module';
         OrderDetail,
         Stock,
       ],
+      logging: false,
     }),
   ],
   controllers: [HealthController],

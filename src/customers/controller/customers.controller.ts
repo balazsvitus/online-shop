@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  NotFoundException,
-  Param,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import CustomerInDTO from '../dto/customer.indto';
 import CustomersMapper from '../mapper/customers.mapper';
 import { CustomersService } from '../service/customers.service';
@@ -23,12 +16,9 @@ export class CustomersController {
   @ApiResponse({ status: 404, description: "The user can't be found" })
   @Get(':id')
   async getCustomerById(
-    @Param() { id }: { id: string },
+    @Param('id') id: string,
   ): Promise<CustomerOutDTO | null> {
     const user = await this.customerService.getCustomerById(id);
-    if (!user) {
-      throw new NotFoundException();
-    }
     return this.customersMapper.customerToOutDto(user);
   }
 

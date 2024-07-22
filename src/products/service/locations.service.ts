@@ -6,27 +6,29 @@ import LocationsRepository from '../repository/location.repository';
 export class LocationsService {
   constructor(private locationsRepository: LocationsRepository) {}
 
-  async getLocations(): Promise<Location[]> {
+  getLocations(): Promise<Location[]> {
     return this.locationsRepository.findAll();
   }
 
   async getLocationById(id: string): Promise<Location | null> {
     const location = await this.locationsRepository.findOne(id);
-    if (location === null) {
-      throw new NotFoundException();
+    if (!location) {
+      throw new NotFoundException("The location can't be found");
     }
     return location;
   }
 
-  async createLocation(location: Location): Promise<Location> {
-    return this.locationsRepository.create(location);
+  createLocation(location: Location): Promise<Location> {
+    return this.locationsRepository.save(location);
   }
 
   async updateLocation(location: Location): Promise<Location> {
-    return this.locationsRepository.update(location);
+    await this.getLocationById(location.id);
+    return this.locationsRepository.save(location);
   }
 
   async removeLocation(id: string): Promise<void> {
+    await this.getLocationById(id);
     this.locationsRepository.remove(id);
   }
 }

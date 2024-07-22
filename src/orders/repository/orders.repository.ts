@@ -11,18 +11,19 @@ export default class OrdersRepository {
   ) {}
 
   findAll(): Promise<Order[]> {
-    return this.ordersRepository.find({ relations: ['customer'] });
+    return this.ordersRepository.find({
+      relations: ['customer', 'orderDetails'],
+    });
   }
 
   findOne(id: string): Promise<Order | null> {
-    return this.ordersRepository.findOneBy({ id });
+    return this.ordersRepository.findOne({
+      where: { id },
+      relations: ['customer', 'orderDetails'],
+    });
   }
 
-  create(order: Order): Promise<Order> {
-    return this.ordersRepository.save(order);
-  }
-
-  update(order: Order): Promise<Order> {
+  save(order: Order): Promise<Order> {
     return this.ordersRepository.save(order);
   }
 

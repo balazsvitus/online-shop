@@ -15,14 +15,13 @@ export default class ProductsRepository {
   }
 
   findOne(id: string): Promise<Product | null> {
-    return this.productsRepository.findOneBy({ id });
+    return this.productsRepository.findOne({
+      where: { id },
+      relations: ['category'],
+    });
   }
 
-  create(order: Product): Promise<Product> {
-    return this.productsRepository.save(order);
-  }
-
-  update(order: Product): Promise<Product> {
+  save(order: Product): Promise<Product> {
     return this.productsRepository.save(order);
   }
 
