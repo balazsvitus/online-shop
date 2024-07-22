@@ -35,6 +35,6 @@ export class ProductCategoriesService {
 
   async removeProductCategory(id: string): Promise<void> {
     await this.getProductCategoryById(id);
-    this.productCategoriesRepository.remove(id);
+    await this.productCategoriesRepository.remove(id);
   }
 }

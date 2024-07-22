@@ -58,6 +58,6 @@ export class OrdersService {
 
   async removeOrder(id: string): Promise<void> {
     await this.getOrderById(id);
-    this.ordersRepository.remove(id);
+    await this.ordersRepository.remove(id);
   }
 }
