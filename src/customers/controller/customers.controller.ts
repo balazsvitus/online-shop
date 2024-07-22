@@ -6,10 +6,10 @@ import {
   ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
-import CustomerInDTO from '../dto/customer.indto';
+import CustomerInDTO from '../dto/customerIn.dto';
 import CustomersMapper from '../mapper/customers.mapper';
 import { CustomersService } from '../service/customers.service';
-import CustomerOutDTO from '../dto/customer.outdto';
+import CustomerOutDTO from '../dto/customerOut.dto';
 import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('customers')

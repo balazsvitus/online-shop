@@ -8,7 +8,7 @@ import {
   ArrayNotEmpty,
   ValidateNested,
 } from 'class-validator';
-import OrderDetailInDTO from './orderDetail.indto';
+import OrderDetailInDTO from './orderDetailIn.dto';
 import { Type } from 'class-transformer';
 
 export default class OrderDTO {

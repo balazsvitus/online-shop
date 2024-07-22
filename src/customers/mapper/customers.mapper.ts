@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import CustomerInDTO from '../dto/customer.indto';
+import CustomerInDTO from '../dto/customerIn.dto';
 import Customer from '../domain/customer.domain';
-import CustomerOutDTO from '../dto/customer.outdto';
+import CustomerOutDTO from '../dto/customerOut.dto';
 
 @Injectable()
 export default class CustomersMapper {

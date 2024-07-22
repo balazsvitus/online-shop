@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -57,36 +56,20 @@ export class OrdersController {
   })
   @Post()
   async createOrder(@Body() orderDTO: OrderDTO): Promise<OrderDTO> {
-    const orderValid = await this.orderDetailsService.validateOrderDetails(
+    // await this.ordersService.validateOrder(orderDTO.orderDetails);
+
+    const orderDetails = this.orderDetailsMapper.inDtosToOrderDetails(
+      '',
       orderDTO.orderDetails,
     );
-    if (!orderValid) {
-      throw new BadRequestException(
-        'There are less items in stock than required!',
-      );
-    }
-
     const customer = await this.customersService.getCustomerById(
       orderDTO.customer,
     );
-    const order = await this.ordersService.createOrder(
+    let order = this.ordersMapper.dtoToOrder(orderDTO, customer);
+    order = await this.ordersService.createOrder(
       this.ordersMapper.dtoToOrder(orderDTO, customer),
+      orderDetails,
     );
-
-    await this.orderDetailsService.decreaseStock(orderDTO.orderDetails);
-    await this.orderDetailsService.saveOrderDetails(
-      this.orderDetailsMapper.inDtosToOrderDetails(
-        order.id,
-        orderDTO.orderDetails,
-      ),
-    );
-
-    const orderDetails = this.orderDetailsMapper.inDtosToOrderDetails(
-      order.id,
-      orderDTO.orderDetails,
-    );
-    order.orderDetails = orderDetails;
-    console.log(order);
 
     return this.ordersMapper.orderToDto(order, orderDTO.orderDetails);
   }
@@ -104,7 +87,7 @@ export class OrdersController {
     const customer = await this.customersService.getCustomerById(
       orderDTO.customer,
     );
-    const order = await this.ordersService.createOrder(
+    const order = await this.ordersService.updateOrder(
       this.ordersMapper.dtoToOrder(orderDTO, customer),
     );
     order.id = id;
