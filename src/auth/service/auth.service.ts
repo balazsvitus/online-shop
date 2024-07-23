@@ -59,4 +59,22 @@ export class AuthService {
       accessToken: this.jwtService.sign(payload),
     };
   }
+
+  async loginLocal(customer: User) {
+    const valid = await this.validateUser(customer.username, customer.password);
+    if (!valid) {
+      throw new UnauthorizedException('The password is incorrect');
+    }
+    const payload = {
+      username: valid.username,
+      sub: valid.id,
+    };
+
+    console.log(payload);
+
+    return {
+      ...customer,
+      accessToken: this.jwtService.sign(payload),
+    };
+  }
 }

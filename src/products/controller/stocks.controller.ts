@@ -37,9 +37,7 @@ export class StocksController {
   @Put()
   async updateStock(@Body() stock: StockDTO): Promise<StockDTO> {
     return this.stocksMapper.stockToDto(
-      await this.stocksService.updateProduct(
-        this.stocksMapper.dtoToStock(stock),
-      ),
+      await this.stocksService.updateStock(this.stocksMapper.dtoToStock(stock)),
     );
   }
 }

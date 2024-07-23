@@ -6,10 +6,17 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { RefreshJwtStrategy } from './strategies/refresh-token.strategy';
 import { RolesGuard } from './guard/roles.guard';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, RefreshJwtStrategy, RolesGuard],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    RefreshJwtStrategy,
+    RolesGuard,
+    LocalStrategy,
+  ],
   imports: [
     CustomersModule,
     JwtModule.register({
