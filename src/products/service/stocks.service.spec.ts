@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import StocksRepository from '../repository/stock.repository';
 import { StocksService } from './stocks.service';
 import Stock from '../domain/stock.domain';
-import OrderDetail from 'src/orders/domain/orderDetail.domain';
+import OrderDetail from '../../orders/domain/orderDetail.domain';
 
 describe('stocksService', () => {
   let stocksService: StocksService;

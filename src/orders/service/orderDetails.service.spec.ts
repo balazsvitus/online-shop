@@ -3,7 +3,7 @@ import OrderDetailsRepository from '../repository/orderDetails.repository';
 import { OrderDetailsService } from './orderDetails.service';
 import { StocksService } from '../../products/service/stocks.service';
 import OrderDetail from '../domain/orderDetail.domain';
-import Stock from 'src/products/domain/stock.domain';
+import Stock from '../../products/domain/stock.domain';
 
 describe('orderDetailsService', () => {
   let orderDetailsService: OrderDetailsService;

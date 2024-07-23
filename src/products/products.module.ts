@@ -19,7 +19,7 @@ import LocationsRepository from './repository/location.repository';
 import { LocationsService } from './service/locations.service';
 import LocationsMapper from './mapper/location.mapper';
 import Location from './domain/location.domain';
-import { CustomersModule } from 'src/customers/customers.module';
+import { CustomersModule } from '../customers/customers.module';
 
 @Module({
   imports: [
