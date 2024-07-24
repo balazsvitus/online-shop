@@ -15,28 +15,38 @@ import ProductDTO from '../dto/product.dto';
 import ProductCategory from '../domain/productCategory.domain';
 import { ProductCategoriesService } from '../service/productCategories.service';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
-import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
+// import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 import { Roles } from '../../auth/decorator/roles.decorator';
 import { RolesGuard } from '../../auth/guard/roles.guard';
+import ProductOutDTO from '../dto/productOut.dto';
+import ProductCategoriesMapper from '../mapper/productCategory.mapper';
 
 @Controller('products')
-@UseGuards(JwtGuard)
+// @UseGuards(JwtGuard)
 @ApiBearerAuth()
 export class ProductsController {
   constructor(
     private productsMapper: ProductsMapper,
     private productsService: ProductsService,
     private productCategoriesService: ProductCategoriesService,
+    private productCategoriesMapper: ProductCategoriesMapper,
   ) {}
 
   @ApiResponse({ status: 200, description: 'Returns the products' })
   @Get()
-  async getProducts(): Promise<ProductDTO[]> {
+  async getProducts(): Promise<ProductOutDTO[]> {
     const products = await this.productsService.getProducts();
 
-    const productsDTO: ProductDTO[] = [];
+    const productsDTO: ProductOutDTO[] = [];
     products.map((product) => {
-      productsDTO.push(this.productsMapper.productToDto(product));
+      productsDTO.push(
+        this.productsMapper.productToProductOutDto(
+          product,
+          this.productCategoriesMapper.productCategoryToOutDto(
+            product.category,
+          ),
+        ),
+      );
     });
     return productsDTO;
   }
@@ -46,9 +56,12 @@ export class ProductsController {
   @Get(':id')
   async getProductById(
     @Param('id', ParseUUIDPipe) id: string,
-  ): Promise<ProductDTO | null> {
+  ): Promise<ProductOutDTO | null> {
     const product = await this.productsService.getProductById(id);
-    return this.productsMapper.productToDto(product);
+    return this.productsMapper.productToProductOutDto(
+      product,
+      this.productCategoriesMapper.productCategoryToOutDto(product.category),
+    );
   }
 
   @ApiResponse({

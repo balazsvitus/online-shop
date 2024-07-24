@@ -8,8 +8,9 @@ import {
   IsPositive,
   IsUUID,
 } from 'class-validator';
+import ProductCategoryOutDTO from './productCategoryOut.dto';
 
-export default class ProductDTO {
+export default class ProductOutDTO {
   @ApiProperty({ description: 'The id of the product' })
   @IsUUID()
   @IsNotEmpty()
@@ -41,7 +42,7 @@ export default class ProductDTO {
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(40)
-  category: string;
+  category: ProductCategoryOutDTO;
   @ApiProperty({ description: 'The supplier of the product' })
   @IsString()
   @IsNotEmpty()
@@ -61,7 +62,7 @@ export default class ProductDTO {
     description: string,
     price: number,
     weight: number,
-    category: string,
+    category: ProductCategoryOutDTO,
     supplier: string,
     imageUrl: string,
   ) {
