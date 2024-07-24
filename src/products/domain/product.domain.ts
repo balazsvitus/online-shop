@@ -52,7 +52,7 @@ export default class Product {
     this.imageUrl = imageUrl;
   }
 
-  getCategory() {
+  getCategory(): ProductCategory {
     return this.category;
   }
 }

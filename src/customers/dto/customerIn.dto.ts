@@ -6,7 +6,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { CustomerRole } from '../domain/customer.domain';
+import { CustomerRole } from '../enum/customerRole.enum';
 
 export default class CustomerInDTO {
   @ApiProperty({ description: 'The first name of the customer' })

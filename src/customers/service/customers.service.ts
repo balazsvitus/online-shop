@@ -19,18 +19,13 @@ export class CustomersService {
     return customer;
   }
 
-  async getCustomersByUsername(username: string) {
+  async getCustomersByUsername(username: string): Promise<Customer | null> {
     return await this.customersRepository.findOneByUsername(username);
   }
 
-  // async createCustomer(customer: Customer): Promise<Customer> {
-  //   return await this.customersRepository.create(customer);
-  // }
-
   async createCustomer(customer: Customer): Promise<Customer> {
     try {
-      const hashedPassword = await hash(customer.password, 10);
-      customer.password = hashedPassword;
+      customer.password = await hash(customer.password, 10);
       return await this.customersRepository.create(customer);
     } catch (error) {
       throw new BadRequestException('User with this username already exists');

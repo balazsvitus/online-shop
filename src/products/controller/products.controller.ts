@@ -20,6 +20,7 @@ import { Roles } from '../../auth/decorator/roles.decorator';
 import { RolesGuard } from '../../auth/guard/roles.guard';
 import ProductOutDTO from '../dto/productOut.dto';
 import ProductCategoriesMapper from '../mapper/productCategory.mapper';
+import { CustomerRole } from '../../customers/enum/customerRole.enum';
 
 @Controller('products')
 // @UseGuards(JwtGuard)
@@ -70,7 +71,7 @@ export class ProductsController {
   })
   @Post()
   @UseGuards(RolesGuard)
-  @Roles(['admin'])
+  @Roles([CustomerRole.ADMIN])
   async createProduct(@Body() productDTO: ProductDTO): Promise<ProductDTO> {
     const productCategory: ProductCategory =
       await this.productCategoriesService.getProductCategoryById(
@@ -91,7 +92,7 @@ export class ProductsController {
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Put(':id')
   @UseGuards(RolesGuard)
-  @Roles(['admin'])
+  @Roles([CustomerRole.ADMIN])
   async updateProduct(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() productDTO: ProductDTO,
@@ -118,8 +119,8 @@ export class ProductsController {
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Delete(':id')
   @UseGuards(RolesGuard)
-  @Roles(['admin'])
-  async removeProduct(@Param('id', ParseUUIDPipe) id: string) {
+  @Roles([CustomerRole.ADMIN])
+  async removeProduct(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     await this.productsService.removeProduct(id);
   }
 }

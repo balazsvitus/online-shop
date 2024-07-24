@@ -5,7 +5,7 @@ import { CustomersService } from '../../customers/service/customers.service';
 import { User } from '../dto/user.dto';
 
 @Injectable()
-export class AuthService {
+export class LocalAuthService {
   constructor(
     private customersService: CustomersService,
     private jwtService: JwtService,
@@ -29,18 +29,12 @@ export class AuthService {
     return null;
   }
 
-  async login(customer: User): Promise<{
+  async loginLocal(customer: User): Promise<{
     id: string;
     username: string;
     role: string;
     accessToken: string;
-    refreshToken: string;
   }> {
-    if (!customer.username || !customer.password) {
-      throw new UnauthorizedException(
-        'You must provide a username and a password!',
-      );
-    }
     const valid = await this.validateUser(customer.username, customer.password);
     if (!valid) {
       throw new UnauthorizedException('The password is incorrect');
@@ -55,31 +49,6 @@ export class AuthService {
       id: valid.id,
       username: valid.username,
       role: valid.role,
-      accessToken: this.jwtService.sign(payload),
-      refreshToken: this.jwtService.sign(payload, { expiresIn: '7d' }),
-    };
-  }
-
-  async refresh({
-    refresh,
-  }: {
-    refresh: string;
-  }): Promise<{ accessToken: string }> {
-    if (!refresh) {
-      throw new UnauthorizedException('You must provide a refresh token!');
-    }
-    const id = this.jwtService.decode(refresh).sub;
-    const customer = await this.customersService.getCustomerById(id);
-    if (!customer) {
-      throw new UnauthorizedException('The user cannot be found');
-    }
-    const payload = {
-      username: customer.username,
-      sub: customer.id,
-      role: customer.role,
-    };
-
-    return {
       accessToken: this.jwtService.sign(payload),
     };
   }
