@@ -93,8 +93,6 @@ export class ProductsController {
     );
     product.id = id;
 
-    console.log('1', product);
-
     return this.productsMapper.productToDto(
       await this.productsService.updateProduct(product),
     );

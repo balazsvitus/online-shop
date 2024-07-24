@@ -32,8 +32,6 @@ export class AuthService {
       sub: valid.id,
     };
 
-    console.log(`[LOGIN] The user is ${valid.username}`);
-
     return {
       id: valid.id,
       username: valid.username,
@@ -53,8 +51,6 @@ export class AuthService {
       sub: customer.id,
     };
 
-    console.log(`[REFRESH] The user is ${customer.username}`);
-
     return {
       accessToken: this.jwtService.sign(payload),
     };
@@ -69,8 +65,6 @@ export class AuthService {
       username: valid.username,
       sub: valid.id,
     };
-
-    console.log(payload);
 
     return {
       ...customer,
