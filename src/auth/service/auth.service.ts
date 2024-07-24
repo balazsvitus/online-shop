@@ -17,7 +17,7 @@ export class AuthService {
       throw new UnauthorizedException('The username is incorrect');
     }
     if (user && (await compare(password, user.password))) {
-      return { username: user.username, id: user.id };
+      return { username: user.username, id: user.id, role: user.role };
     }
     return null;
   }
@@ -30,11 +30,13 @@ export class AuthService {
     const payload = {
       username: valid.username,
       sub: valid.id,
+      role: valid.role,
     };
 
     return {
       id: valid.id,
       username: valid.username,
+      role: valid.role,
       accessToken: this.jwtService.sign(payload),
       refreshToken: this.jwtService.sign(payload, { expiresIn: '7d' }),
     };
@@ -49,6 +51,7 @@ export class AuthService {
     const payload = {
       username: customer.username,
       sub: customer.id,
+      role: customer.role,
     };
 
     return {
@@ -64,6 +67,7 @@ export class AuthService {
     const payload = {
       username: valid.username,
       sub: valid.id,
+      role: valid.role,
     };
 
     return {

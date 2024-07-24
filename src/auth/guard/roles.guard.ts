@@ -29,11 +29,6 @@ export class RolesGuard implements CanActivate {
       return false;
     }
 
-    const user = await this.customersService.getCustomerById(data.sub);
-    if (!user) {
-      return false;
-    }
-
-    return roles.includes(user.role);
+    return roles.includes(data.role);
   }
 }
