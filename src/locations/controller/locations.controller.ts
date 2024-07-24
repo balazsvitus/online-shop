@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { CsvService } from '../service/csv.service';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
-import { JwtGuard } from 'src/auth/guard/jwt-auth.guard';
+import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 
 @Controller('locations')
 export class LocationsController {
