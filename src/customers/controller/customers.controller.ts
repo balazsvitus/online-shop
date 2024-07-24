@@ -13,8 +13,6 @@ import { CustomersService } from '../service/customers.service';
 import CustomerOutDTO from '../dto/customerOut.dto';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
-import { Roles } from '../../auth/decorator/roles.decorator';
-import { RolesGuard } from '../../auth/guard/roles.guard';
 
 @Controller('customers')
 @UseGuards(JwtGuard)
@@ -28,8 +26,6 @@ export class CustomersController {
   @ApiResponse({ status: 200, description: 'The user was successfully found' })
   @ApiResponse({ status: 404, description: "The user can't be found" })
   @Get(':id')
-  @UseGuards(RolesGuard)
-  @Roles(['admin'])
   async getCustomerById(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<CustomerOutDTO | null> {

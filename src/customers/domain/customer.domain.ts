@@ -1,10 +1,6 @@
 import Order from '../../orders/domain/order.domain';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-
-export enum CustomerRole {
-  ADMIN = 'admin',
-  CUSTOMER = 'customer',
-}
+import { CustomerRole } from '../enum/customerRole.enum';
 
 @Entity()
 export default class Customer {

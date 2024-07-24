@@ -7,6 +7,16 @@ describe('CustomersService', () => {
   let customersService: CustomersService;
   let customersRepository: jest.Mocked<CustomersRepository>;
 
+  const customer = {
+    id: '73ec7a0d-a499-4304-9629-670e5eebdc9d',
+    emailAddress: 'Balazs.Vitus@msg.group',
+    firstName: 'Balazs',
+    lastName: 'Vitus',
+    password: 'password',
+    username: 'vitusbalazs',
+    role: 'admin',
+  } as Customer;
+
   beforeEach(async () => {
     customersRepository = {
       findOne: jest.fn(),
@@ -29,15 +39,6 @@ describe('CustomersService', () => {
   });
 
   it('should create a customer', async () => {
-    const customer = {
-      id: '73ec7a0d-a499-4304-9629-670e5eebdc9d',
-      emailAddress: 'Balazs.Vitus@msg.group',
-      firstName: 'Balazs',
-      lastName: 'Vitus',
-      password: 'password',
-      username: 'vitusbalazs',
-      role: 'admin',
-    } as Customer;
     customersRepository.create.mockResolvedValue(customer);
 
     const result = await customersService.createCustomer(customer);
@@ -47,24 +48,11 @@ describe('CustomersService', () => {
   });
 
   it('should find a customer by id', async () => {
-    const customer = {
-      id: '73ec7a0d-a499-4304-9629-670e5eebdc9d',
-      emailAddress: 'Balazs.Vitus@msg.group',
-      firstName: 'Balazs',
-      lastName: 'Vitus',
-      password: 'password',
-      username: 'vitusbalazs',
-      role: 'admin',
-    } as Customer;
     customersRepository.findOne.mockResolvedValue(customer);
 
-    const result = await customersService.getCustomerById(
-      '73ec7a0d-a499-4304-9629-670e5eebdc9d',
-    );
+    const result = await customersService.getCustomerById(customer.id);
 
     expect(result).toEqual(customer);
-    expect(customersRepository.findOne).toHaveBeenCalledWith(
-      '73ec7a0d-a499-4304-9629-670e5eebdc9d',
-    );
+    expect(customersRepository.findOne).toHaveBeenCalledWith(customer.id);
   });
 });

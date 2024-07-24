@@ -7,11 +7,13 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { RefreshJwtStrategy } from './strategies/refresh-token.strategy';
 import { RolesGuard } from './guard/roles.guard';
 import { LocalStrategy } from './strategies/local.strategy';
+import { LocalAuthService } from './service/auth-local.service';
 
 @Module({
   controllers: [AuthController],
   providers: [
     AuthService,
+    LocalAuthService,
     JwtStrategy,
     RefreshJwtStrategy,
     RolesGuard,

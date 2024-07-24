@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { AppModule } from '../src/app.module';
 import { SeederService } from '../src/shared/service/seederService.service';
 
 describe('UsersController E2E Test', () => {
@@ -26,7 +26,12 @@ describe('UsersController E2E Test', () => {
 
     const seederService = app.get<SeederService>(SeederService);
     await seederService.clear();
-    await seederService.seed();
+    await seederService.seed(
+      customerId,
+      firstProductId,
+      secondProductId,
+      locationId,
+    );
   });
 
   afterAll(async () => {

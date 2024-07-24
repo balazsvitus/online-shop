@@ -103,7 +103,7 @@ export class ProductCategoriesController {
     description: "The product category can't be found",
   })
   @Delete(':id')
-  async removeProduct(@Param('id', ParseUUIDPipe) id: string) {
+  async removeProduct(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     await this.productCategoriesService.removeProductCategory(id);
   }
 }

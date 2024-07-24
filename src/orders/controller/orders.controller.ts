@@ -103,7 +103,7 @@ export class OrdersController {
   })
   @ApiResponse({ status: 404, description: "The order can't be found" })
   @Delete(':id')
-  async removeOrder(@Param('id', ParseUUIDPipe) id: string) {
+  async removeOrder(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     await this.ordersService.removeOrder(id);
   }
 }
