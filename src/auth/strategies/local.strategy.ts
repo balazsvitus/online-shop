@@ -2,12 +2,11 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { AuthService } from '../service/auth.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CustomerRole } from 'src/customers/enum/customerRole.enum';
 
 type ValidateReturnType = {
   id: string;
   username: string;
-  role: CustomerRole;
+  role: string;
 };
 
 @Injectable()
