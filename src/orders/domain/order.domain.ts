@@ -18,8 +18,8 @@ export default class Order {
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
-  @Column({ nullable: false })
-  createdAt: string;
+  @Column({ nullable: false, type: 'timestamptz' })
+  createdAt: Date;
 
   @Column({ nullable: false })
   country: string;
@@ -38,7 +38,7 @@ export default class Order {
 
   constructor(
     customer: Customer,
-    createdAt: string,
+    createdAt: Date,
     country: string,
     city: string,
     county: string,

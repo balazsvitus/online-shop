@@ -7,15 +7,19 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import OrdersMapper from '../mapper/orders.mapper';
 import { OrdersService } from '../service/orders.service';
-import { CustomersService } from 'src/customers/service/customers.service';
+import { CustomersService } from '../../customers/service/customers.service';
 import OrderDTO from '../dto/order.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import OrderDetailsMapper from '../mapper/orderDetails.mapper';
+import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 
 @Controller('orders')
+@UseGuards(JwtGuard)
+@ApiBearerAuth()
 export class OrdersController {
   constructor(
     private ordersMapper: OrdersMapper,
@@ -99,7 +103,7 @@ export class OrdersController {
   })
   @ApiResponse({ status: 404, description: "The order can't be found" })
   @Delete(':id')
-  async removeOrder(@Param('id', ParseUUIDPipe) id: string) {
+  async removeOrder(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     await this.ordersService.removeOrder(id);
   }
 }

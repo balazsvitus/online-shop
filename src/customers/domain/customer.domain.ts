@@ -1,5 +1,6 @@
 import Order from '../../orders/domain/order.domain';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { CustomerRole } from '../enum/customerRole.enum';
 
 @Entity()
 export default class Customer {
@@ -12,7 +13,7 @@ export default class Customer {
   @Column({ nullable: false })
   lastName: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, unique: true })
   username: string;
 
   @Column({ nullable: false })
@@ -20,6 +21,14 @@ export default class Customer {
 
   @Column({ nullable: false })
   emailAddress: string;
+
+  @Column({
+    nullable: false,
+    type: 'enum',
+    enum: CustomerRole,
+    default: CustomerRole.CUSTOMER,
+  })
+  role: CustomerRole;
 
   @OneToMany(() => Order, (order) => order.id)
   orders: Order[];
@@ -30,11 +39,13 @@ export default class Customer {
     username: string,
     password: string,
     emailAddress: string,
+    role: CustomerRole,
   ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.username = username;
     this.password = password;
     this.emailAddress = emailAddress;
+    this.role = role;
   }
 }

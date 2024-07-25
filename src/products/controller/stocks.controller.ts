@@ -1,10 +1,13 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 import StocksMapper from '../mapper/stock.mapper';
 import { StocksService } from '../service/stocks.service';
 import StockDTO from '../dto/stock.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 
 @Controller('stocks')
+@UseGuards(JwtGuard)
+@ApiBearerAuth()
 export class StocksController {
   constructor(
     private stocksMapper: StocksMapper,
@@ -34,9 +37,7 @@ export class StocksController {
   @Put()
   async updateStock(@Body() stock: StockDTO): Promise<StockDTO> {
     return this.stocksMapper.stockToDto(
-      await this.stocksService.updateProduct(
-        this.stocksMapper.dtoToStock(stock),
-      ),
+      await this.stocksService.updateStock(this.stocksMapper.dtoToStock(stock)),
     );
   }
 }

@@ -7,6 +7,7 @@ import {
   IsArray,
   ArrayNotEmpty,
   ValidateNested,
+  IsDate,
 } from 'class-validator';
 import OrderDetailInDTO from './orderDetailIn.dto';
 import { Type } from 'class-transformer';
@@ -23,11 +24,10 @@ export default class OrderDTO {
   @ApiProperty({
     description: 'The date when the order was placed',
   })
-  @IsString()
+  @IsDate()
+  @Type(() => Date)
   @IsNotEmpty()
-  @MinLength(3)
-  @MaxLength(40)
-  createdAt: string;
+  createdAt: Date;
   @ApiProperty({
     description: 'The country the order was placed in',
   })
@@ -60,6 +60,10 @@ export default class OrderDTO {
   @MinLength(3)
   @MaxLength(40)
   streetAddress: string;
+  @ApiProperty({
+    description: 'The list of order details',
+    type: [OrderDetailInDTO],
+  })
   @IsArray()
   @ArrayNotEmpty()
   @ValidateNested({ each: true })
@@ -68,7 +72,7 @@ export default class OrderDTO {
 
   constructor(
     customer: string,
-    createdAt: string,
+    createdAt: Date,
     country: string,
     city: string,
     county: string,

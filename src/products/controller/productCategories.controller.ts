@@ -7,14 +7,18 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import ProductCategoriesMapper from '../mapper/productCategory.mapper';
 import { ProductCategoriesService } from '../service/productCategories.service';
 import ProductCategoryDTO from '../dto/productCatergory.dto';
 import { ProductsService } from '../service/products.service';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 
 @Controller('product-categories')
+@UseGuards(JwtGuard)
+@ApiBearerAuth()
 export class ProductCategoriesController {
   constructor(
     private productCategoriesMapper: ProductCategoriesMapper,
@@ -99,7 +103,7 @@ export class ProductCategoriesController {
     description: "The product category can't be found",
   })
   @Delete(':id')
-  async removeProduct(@Param('id', ParseUUIDPipe) id: string) {
+  async removeProduct(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     await this.productCategoriesService.removeProductCategory(id);
   }
 }

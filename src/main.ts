@@ -10,6 +10,7 @@ async function bootstrap() {
     .setTitle('Online Shop API')
     .setDescription('.msg CareerStart Online Shop API - practice')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

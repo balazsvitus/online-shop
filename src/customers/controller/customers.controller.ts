@@ -5,14 +5,18 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import CustomerInDTO from '../dto/customerIn.dto';
 import CustomersMapper from '../mapper/customers.mapper';
 import { CustomersService } from '../service/customers.service';
 import CustomerOutDTO from '../dto/customerOut.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 
 @Controller('customers')
+@UseGuards(JwtGuard)
+@ApiBearerAuth()
 export class CustomersController {
   constructor(
     private customersMapper: CustomersMapper,

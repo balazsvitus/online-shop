@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import { CustomerRole } from '../enum/customerRole.enum';
 
 export default class CustomerInDTO {
   @ApiProperty({ description: 'The first name of the customer' })
@@ -32,6 +39,10 @@ export default class CustomerInDTO {
   @MinLength(3)
   @MaxLength(40)
   emailAddress: string;
+  @ApiProperty({ description: 'The role of the customer' })
+  @IsEnum(CustomerRole)
+  @IsNotEmpty()
+  role: CustomerRole;
 
   constructor(
     firstName: string,
@@ -39,11 +50,13 @@ export default class CustomerInDTO {
     username: string,
     password: string,
     emailAddress: string,
+    role: CustomerRole,
   ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.username = username;
     this.password = password;
     this.emailAddress = emailAddress;
+    this.role = role;
   }
 }

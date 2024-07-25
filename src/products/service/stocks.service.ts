@@ -25,7 +25,7 @@ export class StocksService {
     return stock;
   }
 
-  async updateProduct(stock: Stock): Promise<Stock> {
+  async updateStock(stock: Stock): Promise<Stock> {
     await this.getStock(stock.productId, stock.locationId);
     return this.stocksRepository.update(stock);
   }
