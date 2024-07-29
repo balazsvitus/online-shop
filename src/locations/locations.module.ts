@@ -16,5 +16,6 @@ import { CsvService } from './service/csv.service';
     LocationsMapper,
     CsvService,
   ],
+  exports: [LocationsMapper],
 })
 export class LocationsModule {}

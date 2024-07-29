@@ -16,9 +16,10 @@ import OrderDTO from '../dto/order.dto';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import OrderDetailsMapper from '../mapper/orderDetails.mapper';
 import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
+import OrderCheckoutDTO from '../dto/orderCheckout.dto';
 
 @Controller('orders')
-@UseGuards(JwtGuard)
+// @UseGuards(JwtGuard)
 @ApiBearerAuth()
 export class OrdersController {
   constructor(
@@ -105,5 +106,27 @@ export class OrdersController {
   @Delete(':id')
   async removeOrder(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     await this.ordersService.removeOrder(id);
+  }
+
+  @ApiResponse({
+    status: 201,
+    description: 'The order was created successfully',
+  })
+  @Post('checkout')
+  async checkout(
+    @Body() orderDTO: OrderCheckoutDTO,
+  ): Promise<OrderCheckoutDTO | null> {
+    const orderDetails = this.orderDetailsMapper.checkoutDtosToOrderDetails(
+      orderDTO.orderDetails,
+    );
+    const customer = await this.customersService.getCustomerById(
+      orderDTO.customer,
+    );
+    const order = await this.ordersService.createOrder(
+      this.ordersMapper.dtoToOrder(orderDTO, customer),
+      orderDetails,
+    );
+
+    return this.ordersMapper.orderToCheckoutDto(order, orderDTO.orderDetails);
   }
 }

@@ -118,8 +118,8 @@ export class ProductsController {
   })
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Delete(':id')
-  @UseGuards(RolesGuard)
-  @Roles([CustomerRole.ADMIN])
+  // @UseGuards(RolesGuard)
+  // @Roles([CustomerRole.ADMIN])
   async removeProduct(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     await this.productsService.removeProduct(id);
   }

@@ -11,7 +11,9 @@ export default class StocksRepository {
   ) {}
 
   findAll(): Promise<Stock[]> {
-    return this.stocksRepository.find();
+    return this.stocksRepository.find({
+      relations: ['product', 'location', 'product.category'],
+    });
   }
 
   findOne(productId: string, locationId: string): Promise<Stock> {
@@ -20,6 +22,7 @@ export default class StocksRepository {
         productId,
         locationId,
       },
+      relations: ['product', 'location', 'product.category'],
     });
   }
 

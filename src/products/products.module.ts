@@ -16,11 +16,13 @@ import StocksRepository from './repository/stock.repository';
 import StocksMapper from './mapper/stock.mapper';
 import { StocksController } from './controller/stocks.controller';
 import { CustomersModule } from '../customers/customers.module';
+import { LocationsModule } from 'src/locations/locations.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ProductCategory, Product, Stock]),
     CustomersModule,
+    LocationsModule,
   ],
   controllers: [
     ProductsController,
