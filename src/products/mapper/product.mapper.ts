@@ -9,7 +9,6 @@ import ProductCategoryOutDTO from '../dto/productCategoryOut.dto';
 export default class ProductsMapper {
   productToDto(product: Product): ProductDTO {
     return new ProductDTO(
-      product.id,
       product.name,
       product.description,
       product.price,

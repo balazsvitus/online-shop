@@ -9,6 +9,8 @@ import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 
 @Controller('locations')
+@UseGuards(JwtGuard)
+@ApiBearerAuth()
 export class LocationsController {
   constructor(private csvService: CsvService) {}
 

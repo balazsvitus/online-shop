@@ -6,14 +6,9 @@ import {
   MaxLength,
   IsNumber,
   IsPositive,
-  IsUUID,
 } from 'class-validator';
 
 export default class ProductDTO {
-  @ApiProperty({ description: 'The id of the product' })
-  @IsUUID()
-  @IsNotEmpty()
-  id: string;
   @ApiProperty({ description: 'The name of the product' })
   @IsString()
   @IsNotEmpty()
@@ -56,7 +51,6 @@ export default class ProductDTO {
   imageUrl: string;
 
   constructor(
-    id: string,
     name: string,
     description: string,
     price: number,
@@ -65,7 +59,6 @@ export default class ProductDTO {
     supplier: string,
     imageUrl: string,
   ) {
-    this.id = id;
     this.name = name;
     this.description = description;
     this.price = price;

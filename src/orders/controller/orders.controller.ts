@@ -19,7 +19,7 @@ import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 import OrderCheckoutDTO from '../dto/orderCheckout.dto';
 
 @Controller('orders')
-// @UseGuards(JwtGuard)
+@UseGuards(JwtGuard)
 @ApiBearerAuth()
 export class OrdersController {
   constructor(

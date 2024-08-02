@@ -15,15 +15,15 @@ import ProductDTO from '../dto/product.dto';
 import ProductCategory from '../domain/productCategory.domain';
 import { ProductCategoriesService } from '../service/productCategories.service';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
-// import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
 import { Roles } from '../../auth/decorator/roles.decorator';
 import { RolesGuard } from '../../auth/guard/roles.guard';
 import ProductOutDTO from '../dto/productOut.dto';
 import ProductCategoriesMapper from '../mapper/productCategory.mapper';
 import { CustomerRole } from '../../customers/enum/customerRole.enum';
+import { JwtGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('products')
-// @UseGuards(JwtGuard)
+@UseGuards(JwtGuard)
 @ApiBearerAuth()
 export class ProductsController {
   constructor(
@@ -72,16 +72,17 @@ export class ProductsController {
   @Post()
   @UseGuards(RolesGuard)
   @Roles([CustomerRole.ADMIN])
-  async createProduct(@Body() productDTO: ProductDTO): Promise<ProductDTO> {
+  async createProduct(@Body() productDTO: ProductDTO): Promise<ProductOutDTO> {
     const productCategory: ProductCategory =
       await this.productCategoriesService.getProductCategoryById(
         productDTO.category,
       );
 
-    return this.productsMapper.productToDto(
+    return this.productsMapper.productToProductOutDto(
       await this.productsService.createProduct(
         this.productsMapper.dtoToProduct(productDTO, productCategory),
       ),
+      this.productCategoriesMapper.productCategoryToOutDto(productCategory),
     );
   }
 
@@ -118,8 +119,8 @@ export class ProductsController {
   })
   @ApiResponse({ status: 404, description: "The product can't be found" })
   @Delete(':id')
-  // @UseGuards(RolesGuard)
-  // @Roles([CustomerRole.ADMIN])
+  @UseGuards(RolesGuard)
+  @Roles([CustomerRole.ADMIN])
   async removeProduct(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     await this.productsService.removeProduct(id);
   }

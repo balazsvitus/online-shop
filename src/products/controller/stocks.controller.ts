@@ -18,7 +18,7 @@ import LocationsMapper from 'src/locations/mapper/location.mapper';
 import ProductCategoriesMapper from '../mapper/productCategory.mapper';
 
 @Controller('stocks')
-// @UseGuards(JwtGuard)
+@UseGuards(JwtGuard)
 @ApiBearerAuth()
 export class StocksController {
   constructor(
