@@ -15,6 +15,7 @@ import ProductCategoryDTO from '../dto/productCatergory.dto';
 import { ProductsService } from '../service/products.service';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { JwtGuard } from '../../auth/guard/jwt-auth.guard';
+import ProductCategoryOutDTO from '../dto/productCategoryOut.dto';
 
 @Controller('product-categories')
 @UseGuards(JwtGuard)
@@ -28,14 +29,14 @@ export class ProductCategoriesController {
 
   @ApiResponse({ status: 200, description: 'Returns the product categories' })
   @Get()
-  async getProducts(): Promise<ProductCategoryDTO[]> {
+  async getProducts(): Promise<ProductCategoryOutDTO[]> {
     const productCategories =
       await this.productCategoriesService.getProductCategories();
 
-    const productCategoriesDto: ProductCategoryDTO[] = [];
+    const productCategoriesDto: ProductCategoryOutDTO[] = [];
     productCategories.map((productCategory) => {
       productCategoriesDto.push(
-        this.productCategoriesMapper.productCategoryToDto(productCategory),
+        this.productCategoriesMapper.productCategoryToOutDto(productCategory),
       );
     });
     return productCategoriesDto;

@@ -41,6 +41,14 @@ export class OrdersService {
     return savedOrder;
   }
 
+  async checkoutOrder(
+    order: Order,
+    orderDetails: OrderDetail[],
+  ): Promise<Order> {
+    console.log(order, orderDetails);
+    return order;
+  }
+
   async validateOrder(orderDetails: OrderDetail[]): Promise<void> {
     const orderValid =
       await this.orderDetailsService.validateOrderDetails(orderDetails);

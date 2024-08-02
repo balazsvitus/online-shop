@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import OrderDetailInDTO from '../dto/orderDetailIn.dto';
 import OrderDetail from '../domain/orderDetail.domain';
+import OrderDetailCheckoutDTO from '../dto/orderDetailsCheckout.dto';
 
 @Injectable()
 export default class OrderDetailsMapper {
@@ -52,6 +53,25 @@ export default class OrderDetailsMapper {
           orderId,
           orderDetailDTO.productId,
           orderDetailDTO.shippedFrom,
+          orderDetailDTO.quantity,
+        ),
+      );
+    });
+
+    return orderDetails;
+  }
+
+  checkoutDtosToOrderDetails(
+    orderDetailDTOs: OrderDetailCheckoutDTO[],
+  ): OrderDetail[] {
+    const orderDetails: OrderDetail[] = [];
+
+    orderDetailDTOs.map((orderDetailDTO) => {
+      orderDetails.push(
+        new OrderDetail(
+          '',
+          orderDetailDTO.productId,
+          '',
           orderDetailDTO.quantity,
         ),
       );

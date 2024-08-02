@@ -6,13 +6,14 @@ import { CustomersModule } from './customers/customers.module';
 import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import ProductCategory from './products/domain/productCategory.domain';
-import Location from './products/domain/location.domain';
+import Location from './locations/domain/location.domain';
 import Product from './products/domain/product.domain';
 import Customer from './customers/domain/customer.domain';
 import Order from './orders/domain/order.domain';
 import OrderDetail from './orders/domain/orderDetail.domain';
 import Stock from './products/domain/stock.domain';
 import { AuthModule } from './auth/auth.module';
+import { LocationsModule } from './locations/locations.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { AuthModule } from './auth/auth.module';
       ],
       logging: false,
     }),
+    LocationsModule,
   ],
   controllers: [HealthController],
 })

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import ProductsRepository from '../repository/products.repository';
 import Product from '../domain/product.domain';
 
@@ -29,6 +33,12 @@ export class ProductsService {
 
   async removeProduct(id: string): Promise<void> {
     await this.getProductById(id);
-    await this.productsRepository.remove(id);
+    try {
+      await this.productsRepository.remove(id);
+    } catch (error) {
+      throw new BadRequestException(
+        "The product is part of an order or stock, so it can't be deleted",
+      );
+    }
   }
 }
